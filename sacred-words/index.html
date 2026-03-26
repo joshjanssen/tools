@@ -273,17 +273,23 @@
   .swipe-hints {
     display: flex;
     justify-content: space-between;
-    padding: 6px 32px 2px;
+    padding: 8px 24px 4px;
     flex-shrink: 0;
   }
   .hint {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    opacity: 0.35;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
   }
   .hint-left { color: var(--text-secondary); }
-  .hint-right { color: var(--love); }
+  .hint-right { color: var(--love); border-color: rgba(255,68,88,0.15); }
 
   /* ═══ Actions Bar ═══ */
   .actions {
@@ -915,7 +921,7 @@
 
     <div class="swipe-hints">
       <div class="hint hint-left">← Next</div>
-      <div class="hint hint-right">Love →</div>
+      <div class="hint hint-right">♥ Love →</div>
     </div>
 
     <div class="actions" id="actions">

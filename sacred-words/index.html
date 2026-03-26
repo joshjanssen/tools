@@ -248,7 +248,7 @@
     border: 2px solid transparent;
   }
   .intent-overlay.pass-intent {
-    background: linear-gradient(225deg, rgba(100,100,100,0.06) 0%, transparent 60%);
+    background: linear-gradient(225deg, rgba(200,164,78,0.05) 0%, transparent 60%);
     border: 2px solid transparent;
   }
   .intent-label {
@@ -264,8 +264,8 @@
     border: 3px solid var(--love);
   }
   .pass-intent .intent-label {
-    color: var(--pass);
-    border: 3px solid var(--pass);
+    color: var(--text-secondary);
+    border: 3px solid var(--text-secondary);
     transform: rotate(15deg);
   }
 
@@ -301,10 +301,10 @@
     width: 60px; height: 60px;
     background: var(--surface-raised);
     border: 2px solid var(--border);
-    color: var(--pass);
-    font-size: 24px;
+    color: var(--text-secondary);
+    font-size: 22px;
   }
-  .act-btn.pass:active { border-color: var(--pass); }
+  .act-btn.pass:active { border-color: var(--text-secondary); }
   .act-btn.love {
     width: 68px; height: 68px;
     background: linear-gradient(145deg, #1f1215 0%, var(--surface-raised) 100%);
@@ -874,10 +874,10 @@
             </div>
           </div>
           <div class="step">
-            <div class="step-icon pass-icon">✕</div>
+            <div class="step-icon" style="color:var(--text-secondary)">→</div>
             <div class="step-content">
-              <strong>Swipe Left = Pass</strong>
-              <span>Not feeling it? Drag left or tap X to skip.</span>
+              <strong>Swipe Left = Next</strong>
+              <span>Move on to the next one. Drag left or tap →</span>
             </div>
           </div>
           <div class="step">
@@ -919,7 +919,7 @@
 
     <div class="actions" id="actions">
       <button class="act-btn small" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none" aria-label="Undo">↩</button>
-      <button class="act-btn pass" onclick="buttonSwipe('left')" aria-label="Pass">✕</button>
+      <button class="act-btn pass" onclick="buttonSwipe('left')" aria-label="Next">→</button>
       <button class="act-btn love" onclick="buttonSwipe('right')" aria-label="Love">♥</button>
       <button class="act-btn small" style="opacity:0;pointer-events:none">⠀</button>
     </div>
@@ -1253,7 +1253,7 @@ function renderCard() {
         <div class="intent-label">LOVE</div>
       </div>
       <div class="intent-overlay pass-intent" id="passOverlay">
-        <div class="intent-label">NOPE</div>
+        <div class="intent-label">NEXT</div>
       </div>
       <div class="ornament">✦ ✦ ✦</div>
       <div class="quote-text">\u201C${q.text}\u201D</div>

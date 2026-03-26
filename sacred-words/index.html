@@ -274,8 +274,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    padding: 12px 20px 8px;
+    padding: 8px 20px 4px;
     flex-shrink: 0;
   }
   .act-btn {
@@ -296,25 +295,6 @@
     border: 1px solid var(--border);
     font-size: 16px;
     color: var(--text-secondary);
-  }
-  .act-btn.pass {
-    width: 60px; height: 60px;
-    background: var(--surface-raised);
-    border: 2px solid var(--border);
-    color: var(--text-secondary);
-    font-size: 22px;
-  }
-  .act-btn.pass:active { border-color: var(--text-secondary); }
-  .act-btn.love {
-    width: 68px; height: 68px;
-    background: linear-gradient(145deg, #1f1215 0%, var(--surface-raised) 100%);
-    border: 2px solid rgba(255,68,88,0.25);
-    color: var(--love);
-    font-size: 28px;
-  }
-  .act-btn.love:active {
-    border-color: var(--love);
-    box-shadow: 0 0 30px var(--love-glow);
   }
 
   /* ═══ Particle burst ═══ */
@@ -870,14 +850,14 @@
             <div class="step-icon love-icon">♥</div>
             <div class="step-content">
               <strong>Swipe Right = Love It</strong>
-              <span>Drag the card right or tap the heart to save.</span>
+              <span>Swipe the card right to save it to your favorites.</span>
             </div>
           </div>
           <div class="step">
             <div class="step-icon" style="color:var(--text-secondary)">→</div>
             <div class="step-content">
               <strong>Swipe Left = Next</strong>
-              <span>Move on to the next one. Drag left or tap →</span>
+              <span>Swipe left to move on to the next quote.</span>
             </div>
           </div>
           <div class="step">
@@ -919,9 +899,6 @@
 
     <div class="actions" id="actions">
       <button class="act-btn small" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none" aria-label="Undo">↩</button>
-      <button class="act-btn pass" onclick="buttonSwipe('left')" aria-label="Next">→</button>
-      <button class="act-btn love" onclick="buttonSwipe('right')" aria-label="Love">♥</button>
-      <button class="act-btn small" style="opacity:0;pointer-events:none">⠀</button>
     </div>
   </div>
 
@@ -1452,19 +1429,6 @@ function flyOut(dir) {
   setTimeout(renderCard, 320);
 }
 
-function buttonSwipe(dir) {
-  if (currentIndex >= sessionDeck.length) return;
-  const card = getCard();
-  if (!card) return;
-
-  const peekX = dir === 'right' ? 30 : -30;
-  const overlay = dir === 'right' ? document.getElementById('loveOverlay') : document.getElementById('passOverlay');
-  card.style.transition = 'transform 0.12s ease';
-  card.style.transform = `translateX(${peekX}px) rotate(${peekX * 0.06}deg)`;
-  if (overlay) overlay.style.opacity = '0.8';
-
-  setTimeout(() => flyOut(dir), 120);
-}
 
 function undo() {
   if (history.length === 0) return;

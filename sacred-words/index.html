@@ -147,7 +147,6 @@
     overflow: hidden;
   }
 
-  /* Ghost cards behind */
   .ghost-card {
     position: absolute;
     width: calc(100% - 56px);
@@ -168,7 +167,6 @@
     opacity: 0.2;
   }
 
-  /* Main card */
   .card {
     position: absolute;
     width: calc(100% - 32px);
@@ -193,7 +191,6 @@
     touch-action: none;
   }
   .card:active { cursor: grabbing; }
-
   .card .ornament {
     font-size: 10px;
     letter-spacing: 8px;
@@ -201,7 +198,6 @@
     opacity: 0.35;
     margin-bottom: 28px;
   }
-
   .card .quote-text {
     font-family: 'Cormorant Garamond', serif;
     font-size: 23px;
@@ -212,14 +208,12 @@
     margin-bottom: 28px;
     max-width: 340px;
   }
-
   .card .divider {
     width: 40px;
     height: 1px;
     background: var(--border-light);
     margin-bottom: 16px;
   }
-
   .card .attribution {
     font-size: 12px;
     font-weight: 500;
@@ -284,7 +278,6 @@
     padding: 12px 20px 8px;
     flex-shrink: 0;
   }
-
   .act-btn {
     border: none;
     border-radius: 50%;
@@ -297,7 +290,6 @@
     font-family: inherit;
   }
   .act-btn:active { transform: scale(0.88); }
-
   .act-btn.small {
     width: 44px; height: 44px;
     background: var(--surface-raised);
@@ -305,7 +297,6 @@
     font-size: 16px;
     color: var(--text-secondary);
   }
-
   .act-btn.pass {
     width: 60px; height: 60px;
     background: var(--surface-raised);
@@ -314,7 +305,6 @@
     font-size: 24px;
   }
   .act-btn.pass:active { border-color: var(--pass); }
-
   .act-btn.love {
     width: 68px; height: 68px;
     background: linear-gradient(145deg, #1f1215 0%, var(--surface-raised) 100%);
@@ -327,7 +317,7 @@
     box-shadow: 0 0 30px var(--love-glow);
   }
 
-  /* ═══ Particle burst on love ═══ */
+  /* ═══ Particle burst ═══ */
   .particle-container {
     position: fixed;
     inset: 0;
@@ -345,10 +335,244 @@
   .view { display: none; }
   .view.active { display: flex; flex-direction: column; height: 100%; }
 
-  /* ═══ Favorites Panel ═══ */
-  .favorites-view {
-    background: var(--bg);
+  /* ═══ Welcome / Onboarding ═══ */
+  .welcome-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
+  .welcome-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 340px;
+  }
+  .welcome-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, #8a6e2f 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(200,164,78,0.25);
+    flex-shrink: 0;
+  }
+  .welcome-view h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+  .welcome-view .tagline {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* Session progress banner */
+  .session-progress {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .session-progress .sp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .session-progress .sp-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+  .session-progress .sp-count {
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .session-progress .sp-track {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .session-progress .sp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e0c06a);
+    border-radius: 4px;
+    transition: width 0.6s;
+  }
+  .session-progress .sp-detail {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+  .session-progress .sp-detail strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* Time picker */
+  .time-section {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .time-section h3 {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .time-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+  .time-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    text-align: center;
+  }
+  .time-btn:active { transform: scale(0.97); }
+  .time-btn.selected {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    box-shadow: 0 0 20px rgba(200,164,78,0.1);
+  }
+  .time-btn .time-val {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .time-btn.selected .time-val { color: var(--gold); }
+  .time-btn .time-label {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .time-btn.selected .time-label { color: var(--gold); opacity: 0.8; }
+
+  .how-it-works {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
+  }
+  .how-it-works h3 {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .step-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .step-icon.love-icon { color: var(--love); }
+  .step-icon.pass-icon { color: var(--pass); }
+  .step-icon.star-icon { color: var(--gold); }
+  .step-content { min-width: 0; }
+  .step-content strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 1px;
+    color: var(--text);
+  }
+  .step-content span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    display: block;
+  }
+
+  .begin-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--gold), #b8943f);
+    color: #111;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+    box-shadow: 0 4px 20px rgba(200,164,78,0.25);
+    flex-shrink: 0;
+  }
+  .begin-btn:active { transform: scale(0.97); }
+  .begin-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+    transform: none;
+  }
+
+  .welcome-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .reset-link {
+    color: var(--text-dim);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 11px;
+    margin-top: 8px;
+    display: inline-block;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+  .reset-link:active { color: var(--love); }
+
+  /* ═══ Favorites Panel ═══ */
+  .favorites-view { background: var(--bg); }
   .fav-header {
     display: flex;
     align-items: center;
@@ -372,14 +596,12 @@
     padding: 8px 0;
     font-family: inherit;
   }
-
   .fav-scroll {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding: 16px 16px;
   }
-
   .fav-empty {
     text-align: center;
     padding: 80px 30px;
@@ -388,7 +610,6 @@
     line-height: 1.7;
   }
   .fav-empty .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.5; }
-
   .fav-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -437,7 +658,6 @@
     color: var(--text-dim);
     opacity: 0.5;
   }
-
   .fav-footer {
     padding: 12px 16px;
     border-top: 1px solid var(--border);
@@ -500,6 +720,23 @@
   .done-btns .gold-btn { background: linear-gradient(135deg, var(--gold), #b8943f); color: #111; }
   .done-btns .outline-btn { background: var(--surface-raised); border: 1px solid var(--border); color: var(--text-secondary); }
 
+  /* ═══ All Complete Screen ═══ */
+  .complete-msg {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .complete-msg .big-check {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  .complete-msg p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .complete-msg p strong { color: var(--gold); }
+
   /* ═══ Send Results Modal ═══ */
   .modal-overlay {
     position: fixed;
@@ -560,13 +797,6 @@
   }
   .modal input:focus, .modal textarea:focus { border-color: var(--gold); }
   .modal textarea { min-height: 120px; resize: vertical; font-size: 13px; line-height: 1.5; }
-  .modal .preview-toggle {
-    font-size: 12px;
-    color: var(--gold);
-    cursor: pointer;
-    margin-bottom: 12px;
-    display: inline-block;
-  }
   .modal .btn-row { display: flex; gap: 10px; margin-top: 8px; }
   .modal .btn-row button {
     flex: 1;
@@ -587,135 +817,6 @@
     font-size: 15px;
     font-weight: 500;
   }
-
-  /* ═══ Welcome / Onboarding ═══ */
-  .welcome-view {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 24px;
-    text-align: center;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .welcome-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 340px;
-  }
-
-  .welcome-icon {
-    width: 60px; height: 60px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, var(--gold) 0%, #8a6e2f 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 24px rgba(200,164,78,0.25);
-    flex-shrink: 0;
-  }
-
-  .welcome-view h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
-    font-weight: 500;
-    margin-bottom: 6px;
-    letter-spacing: 0.01em;
-  }
-
-  .welcome-view .tagline {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 32px;
-    line-height: 1.5;
-  }
-
-  .how-it-works {
-    width: 100%;
-    text-align: left;
-  }
-
-  .how-it-works h3 {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-dim);
-    margin-bottom: 14px;
-    text-align: center;
-  }
-
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .step-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: var(--surface-raised);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-  .step-icon.love-icon { color: var(--love); }
-  .step-icon.pass-icon { color: var(--pass); }
-  .step-icon.star-icon { color: var(--gold); }
-
-  .step-content {
-    min-width: 0;
-  }
-  .step-content strong {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 1px;
-    color: var(--text);
-  }
-  .step-content span {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.35;
-    display: block;
-  }
-
-  .begin-btn {
-    margin-top: 28px;
-    width: 100%;
-    padding: 16px;
-    border-radius: 14px;
-    border: none;
-    background: linear-gradient(135deg, var(--gold), #b8943f);
-    color: #111;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    letter-spacing: 0.02em;
-    transition: all 0.15s;
-    box-shadow: 0 4px 20px rgba(200,164,78,0.25);
-    flex-shrink: 0;
-  }
-  .begin-btn:active { transform: scale(0.97); }
-
-  .welcome-footer {
-    margin-top: 16px;
-    font-size: 11px;
-    color: var(--text-dim);
-    line-height: 1.5;
-    flex-shrink: 0;
-  }
 </style>
 </head>
 <body>
@@ -730,17 +831,48 @@
         <h1>Sacred Words</h1>
         <p class="tagline">Swipe through Bahá'í quotes and pick your favorites.</p>
 
-        <div class="how-it-works">
-          <h3>How It Works</h3>
+        <!-- Session progress (filled dynamically) -->
+        <div class="session-progress" id="sessionProgress" style="display:none">
+          <div class="sp-top">
+            <span class="sp-label">Your Progress</span>
+            <span class="sp-count" id="spCount"></span>
+          </div>
+          <div class="sp-track"><div class="sp-fill" id="spFill" style="width:0%"></div></div>
+          <div class="sp-detail" id="spDetail"></div>
+        </div>
 
+        <!-- Time picker -->
+        <div class="time-section" id="timeSection">
+          <h3>How much time do you have?</h3>
+          <div class="time-options">
+            <button class="time-btn" data-minutes="5" onclick="selectTime(5, this)">
+              <span class="time-val">5 min</span>
+              <span class="time-label" data-quotes=""></span>
+            </button>
+            <button class="time-btn selected" data-minutes="10" onclick="selectTime(10, this)">
+              <span class="time-val">10 min</span>
+              <span class="time-label" data-quotes=""></span>
+            </button>
+            <button class="time-btn" data-minutes="15" onclick="selectTime(15, this)">
+              <span class="time-val">15 min</span>
+              <span class="time-label" data-quotes=""></span>
+            </button>
+            <button class="time-btn" data-minutes="30" onclick="selectTime(30, this)">
+              <span class="time-val">30 min</span>
+              <span class="time-label" data-quotes=""></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="how-it-works" id="howItWorks">
+          <h3>How It Works</h3>
           <div class="step">
             <div class="step-icon love-icon">♥</div>
             <div class="step-content">
               <strong>Swipe Right = Love It</strong>
-              <span>Drag the card right or tap the heart to save a quote.</span>
+              <span>Drag the card right or tap the heart to save.</span>
             </div>
           </div>
-
           <div class="step">
             <div class="step-icon pass-icon">✕</div>
             <div class="step-content">
@@ -748,18 +880,18 @@
               <span>Not feeling it? Drag left or tap X to skip.</span>
             </div>
           </div>
-
           <div class="step">
             <div class="step-icon star-icon">★</div>
             <div class="step-content">
               <strong>Review & Send</strong>
-              <span>When done, review your picks and send them over.</span>
+              <span>When done, review your picks and send them to Josh.</span>
             </div>
           </div>
         </div>
 
-        <button class="begin-btn" onclick="startSwiping()">Begin</button>
-        <p class="welcome-footer">30 quotes · about 3 minutes</p>
+        <button class="begin-btn" id="beginBtn" onclick="startSwiping()">Begin Session</button>
+        <p class="welcome-footer" id="welcomeFooter"></p>
+        <button class="reset-link" id="resetLink" style="display:none" onclick="resetAllProgress()">Reset all progress</button>
       </div>
     </div>
   </div>
@@ -796,7 +928,7 @@
   <!-- ═══ FAVORITES VIEW ═══ -->
   <div class="view" id="favoritesView">
     <div class="fav-header">
-      <button class="back-btn" onclick="showView('swipe')">← Back</button>
+      <button class="back-btn" onclick="goBackFromFavorites()">← Back</button>
       <h2>Your Favorites</h2>
       <span style="width:50px"></span>
     </div>
@@ -807,7 +939,7 @@
     </div>
   </div>
 
-  <!-- ═══ DONE VIEW ═══ -->
+  <!-- ═══ DONE VIEW (session complete) ═══ -->
   <div class="view" id="doneView">
     <header>
       <div class="logo">
@@ -817,12 +949,12 @@
     </header>
     <div class="done-view" style="flex:1;display:flex;">
       <div class="star-cluster">✦ ✦ ✦</div>
-      <h2>All Done</h2>
+      <h2 id="doneTitle">Session Complete</h2>
       <div class="stats" id="doneStats"></div>
       <div class="done-btns">
         <button class="gold-btn" onclick="openSendModal()">Send Results to Josh →</button>
         <button class="outline-btn" onclick="showView('favorites')">Review Favorites</button>
-        <button class="outline-btn" onclick="resetAndRestart()">Start Over</button>
+        <button class="outline-btn" onclick="backToWelcome()">Back to Home</button>
       </div>
     </div>
   </div>
@@ -858,53 +990,195 @@
 
 <script>
 // ════════════════════════════════════
-//  QUOTE DATA
+//  QUOTE DATA (placeholder — replace with 300+ final quotes)
 // ════════════════════════════════════
-const quotes = [
-  { text: "The earth is but one country, and mankind its citizens.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "Let your vision be world-embracing, rather than confined to your own self.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "So powerful is the light of unity that it can illuminate the whole earth.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
-  { text: "Be generous in prosperity, and thankful in adversity. Be worthy of the trust of thy neighbor, and look upon him with a bright and friendly face.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "The best beloved of all things in My sight is Justice; turn not away therefrom if thou desirest Me.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "Noble have I created thee, yet thou hast abased thyself. Rise then unto that for which thou wast created.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "Ye are the fruits of one tree, and the leaves of one branch. Deal ye one with another with the utmost love and harmony.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "It is not for him to pride himself who loveth his own country, but rather for him who loveth the whole world.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
-  { text: "The light of a good character surpasseth the light of the sun and the radiance thereof.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
-  { text: "Truthfulness is the foundation of all human virtues.", author: "Bahá'u'lláh", source: "Advent of Divine Justice" },
-  { text: "Regard man as a mine rich in gems of inestimable value. Education can, alone, cause it to reveal its treasures.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "In the garden of thy heart plant naught but the rose of love.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "Knowledge is as wings to man's life, and a ladder for his ascent.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
-  { text: "All men have been created to carry forward an ever-advancing civilization.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "A kindly tongue is the lodestone of the hearts of men. It is the bread of the spirit, it clotheth the words with meaning.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
-  { text: "O Son of Man! I loved thy creation, hence I created thee. Wherefore, do thou love Me, that I may name thy name and fill thy soul with the spirit of life.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "O friend, the heart is the dwelling of eternal mysteries, make it not the home of fleeting fancies.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "To give and to be generous are attributes of Mine; well is it with him that adorneth himself with My virtues.", author: "Bahá'u'lláh", source: "The Hidden Words" },
-  { text: "Consort with all men in a spirit of friendliness and fellowship.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
-  { text: "Set your faces towards unity, and let the radiance of its light shine upon you.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "Arts, crafts and sciences uplift the world of being, and are conducive to its exaltation.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
-  { text: "Be anxiously concerned with the needs of the age ye live in, and center your deliberations on its exigencies and requirements.", author: "Bahá'u'lláh", source: "Gleanings" },
-  { text: "Do not be content with showing friendship in words alone, let your heart burn with loving kindness for all who may cross your path.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "When a thought of war comes, oppose it by a stronger thought of peace. A thought of hatred must be destroyed by a more powerful thought of love.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "The reality of man is his thought, not his material body.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "The world of humanity has two wings — one is women and the other men. Not until both wings are equally developed can the bird fly.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "This is worship: to serve mankind and to minister to the needs of the people.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "If you desire with all your heart, friendship with every race on earth, your thought, spiritual and positive, will spread; it will become the desire of others.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
-  { text: "Happy the soul that shall forget his own good, and like the chosen ones of God, vie with his fellows in service to the good of all.", author: "'Abdu'l-Bahá", source: "The Secret of Divine Civilization" },
-  { text: "Close your eyes to racial differences, and welcome all with the light of oneness.", author: "'Abdu'l-Bahá", source: "The Promulgation of Universal Peace" },
+const ALL_QUOTES = [
+  { id: 1, text: "The earth is but one country, and mankind its citizens.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 2, text: "Let your vision be world-embracing, rather than confined to your own self.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 3, text: "So powerful is the light of unity that it can illuminate the whole earth.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { id: 4, text: "Be generous in prosperity, and thankful in adversity. Be worthy of the trust of thy neighbor, and look upon him with a bright and friendly face.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 5, text: "The best beloved of all things in My sight is Justice; turn not away therefrom if thou desirest Me.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 6, text: "Noble have I created thee, yet thou hast abased thyself. Rise then unto that for which thou wast created.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 7, text: "Ye are the fruits of one tree, and the leaves of one branch. Deal ye one with another with the utmost love and harmony.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 8, text: "It is not for him to pride himself who loveth his own country, but rather for him who loveth the whole world.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { id: 9, text: "The light of a good character surpasseth the light of the sun and the radiance thereof.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { id: 10, text: "Truthfulness is the foundation of all human virtues.", author: "Bahá'u'lláh", source: "Advent of Divine Justice" },
+  { id: 11, text: "Regard man as a mine rich in gems of inestimable value. Education can, alone, cause it to reveal its treasures.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 12, text: "In the garden of thy heart plant naught but the rose of love.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 13, text: "Knowledge is as wings to man's life, and a ladder for his ascent.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { id: 14, text: "All men have been created to carry forward an ever-advancing civilization.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 15, text: "A kindly tongue is the lodestone of the hearts of men. It is the bread of the spirit, it clotheth the words with meaning.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { id: 16, text: "O Son of Man! I loved thy creation, hence I created thee. Wherefore, do thou love Me, that I may name thy name and fill thy soul with the spirit of life.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 17, text: "O friend, the heart is the dwelling of eternal mysteries, make it not the home of fleeting fancies.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 18, text: "To give and to be generous are attributes of Mine; well is it with him that adorneth himself with My virtues.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { id: 19, text: "Consort with all men in a spirit of friendliness and fellowship.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { id: 20, text: "Set your faces towards unity, and let the radiance of its light shine upon you.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 21, text: "Arts, crafts and sciences uplift the world of being, and are conducive to its exaltation.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { id: 22, text: "Be anxiously concerned with the needs of the age ye live in, and center your deliberations on its exigencies and requirements.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { id: 23, text: "Do not be content with showing friendship in words alone, let your heart burn with loving kindness for all who may cross your path.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 24, text: "When a thought of war comes, oppose it by a stronger thought of peace. A thought of hatred must be destroyed by a more powerful thought of love.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 25, text: "The reality of man is his thought, not his material body.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 26, text: "The world of humanity has two wings — one is women and the other men. Not until both wings are equally developed can the bird fly.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 27, text: "This is worship: to serve mankind and to minister to the needs of the people.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 28, text: "If you desire with all your heart, friendship with every race on earth, your thought, spiritual and positive, will spread; it will become the desire of others.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { id: 29, text: "Happy the soul that shall forget his own good, and like the chosen ones of God, vie with his fellows in service to the good of all.", author: "'Abdu'l-Bahá", source: "The Secret of Divine Civilization" },
+  { id: 30, text: "Close your eyes to racial differences, and welcome all with the light of oneness.", author: "'Abdu'l-Bahá", source: "The Promulgation of Universal Peace" },
 ];
+
+// ════════════════════════════════════
+//  PERSISTENT STORAGE (localStorage)
+// ════════════════════════════════════
+const STORAGE_KEY = 'sacred-words-v1';
+
+function loadStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { seen: [], loved: [], passed: [] };
+  // seen: array of quote IDs already shown
+  // loved: array of full quote objects (with id) that were loved
+  // passed: array of quote IDs that were passed
+}
+
+function saveStorage(data) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+
+function clearStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch(e) {}
+}
 
 // ════════════════════════════════════
 //  STATE
 // ════════════════════════════════════
-let deck, currentIndex, favorites, passed, history;
+let sessionDeck = [];      // quotes for this session only
+let currentIndex = 0;      // position within sessionDeck
+let sessionFavorites = [];  // loved during this session
+let sessionPassed = [];     // passed during this session
+let history = [];           // undo stack for this session
+let selectedMinutes = 10;   // default time selection
+let cameFromDone = false;   // track if favorites was opened from done screen
+const SECS_PER_QUOTE = 12;  // estimated seconds to read + swipe
 const RECIPIENT_EMAIL = "josh@fullstackfilms.com";
 
-function initState() {
-  deck = shuffle([...quotes]);
+// ════════════════════════════════════
+//  WELCOME SCREEN SETUP
+// ════════════════════════════════════
+function setupWelcome() {
+  const stored = loadStorage();
+  const totalQuotes = ALL_QUOTES.length;
+  const seenCount = stored.seen.length;
+  const remaining = totalQuotes - seenCount;
+  const allLoved = stored.loved;
+
+  // Update time button labels with actual quote counts
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    const mins = parseInt(btn.dataset.minutes);
+    const maxQuotes = Math.floor((mins * 60) / SECS_PER_QUOTE);
+    const actual = Math.min(maxQuotes, remaining);
+    btn.querySelector('.time-label').textContent = `~${actual} quotes`;
+  });
+
+  // Show session progress if returning user
+  const progressEl = document.getElementById('sessionProgress');
+  if (seenCount > 0) {
+    progressEl.style.display = 'block';
+    const pct = Math.round((seenCount / totalQuotes) * 100);
+    document.getElementById('spCount').textContent = `${seenCount} of ${totalQuotes}`;
+    document.getElementById('spFill').style.width = pct + '%';
+
+    let detailText = `<strong>${allLoved.length}</strong> favorites collected · ${remaining} quotes remaining`;
+    if (remaining === 0) {
+      detailText = `<strong>${allLoved.length}</strong> favorites collected · All quotes reviewed!`;
+    }
+    document.getElementById('spDetail').innerHTML = detailText;
+
+    // Show reset link for returning users
+    document.getElementById('resetLink').style.display = 'inline-block';
+
+    // Hide how-it-works for returning users (they know how it works)
+    document.getElementById('howItWorks').style.display = 'none';
+  } else {
+    progressEl.style.display = 'none';
+    document.getElementById('resetLink').style.display = 'none';
+    document.getElementById('howItWorks').style.display = 'block';
+  }
+
+  // Handle all-done state
+  const beginBtn = document.getElementById('beginBtn');
+  if (remaining === 0) {
+    beginBtn.textContent = 'All Quotes Reviewed!';
+    beginBtn.disabled = true;
+    document.getElementById('timeSection').style.display = 'none';
+    document.getElementById('welcomeFooter').innerHTML =
+      `You've reviewed all ${totalQuotes} quotes and loved ${allLoved.length}. You can send your favorites or reset to start over.`;
+
+    // Add a send button if they have favorites
+    if (allLoved.length > 0) {
+      beginBtn.textContent = 'Send Results to Josh →';
+      beginBtn.disabled = false;
+      beginBtn.onclick = () => {
+        // Load all loved quotes into sessionFavorites for sending
+        sessionFavorites = [...allLoved];
+        updateFavCount();
+        openSendModal();
+      };
+    }
+  } else {
+    beginBtn.textContent = 'Begin Session';
+    beginBtn.disabled = false;
+    beginBtn.onclick = startSwiping;
+    document.getElementById('timeSection').style.display = 'block';
+    document.getElementById('welcomeFooter').textContent = '';
+  }
+
+  // Pre-select 10 min
+  selectTime(selectedMinutes, document.querySelector('.time-btn.selected'));
+}
+
+function selectTime(mins, btn) {
+  selectedMinutes = mins;
+  document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ════════════════════════════════════
+//  SESSION START
+// ════════════════════════════════════
+function startSwiping() {
+  const stored = loadStorage();
+  const seenSet = new Set(stored.seen);
+
+  // Get unseen quotes
+  const unseen = ALL_QUOTES.filter(q => !seenSet.has(q.id));
+
+  if (unseen.length === 0) {
+    // All reviewed — shouldn't reach here but just in case
+    setupWelcome();
+    return;
+  }
+
+  // Calculate how many quotes for this session
+  const maxQuotes = Math.floor((selectedMinutes * 60) / SECS_PER_QUOTE);
+  const sessionSize = Math.min(maxQuotes, unseen.length);
+
+  // Shuffle unseen and take sessionSize
+  sessionDeck = shuffle([...unseen]).slice(0, sessionSize);
   currentIndex = 0;
-  favorites = [];
-  passed = [];
+  sessionFavorites = [];
+  sessionPassed = [];
   history = [];
+
+  // Also load previous favorites so the count is cumulative
+  updateFavCount();
+
+  showView('swipe');
+  renderCard();
 }
 
 function shuffle(arr) {
@@ -924,6 +1198,20 @@ function showView(name) {
 
   if (name === 'favorites') renderFavorites();
   if (name === 'done') renderDone();
+  if (name === 'welcome') setupWelcome();
+}
+
+function goBackFromFavorites() {
+  if (cameFromDone) {
+    showView('done');
+    cameFromDone = false;
+  } else {
+    showView('swipe');
+  }
+}
+
+function backToWelcome() {
+  showView('welcome');
 }
 
 // ════════════════════════════════════
@@ -935,23 +1223,28 @@ const progressLabel = document.getElementById('progressLabel');
 const undoBtn = document.getElementById('undoBtn');
 
 function updateProgress() {
-  const total = deck.length;
+  const total = sessionDeck.length;
   const pct = total > 0 ? (currentIndex / total * 100) : 100;
   progressFill.style.width = pct + '%';
   progressLabel.textContent = `${currentIndex} / ${total}`;
 }
 
 function updateFavCount() {
-  document.getElementById('favCount').textContent = favorites.length;
+  // Show session favorites count + all-time count
+  const stored = loadStorage();
+  const totalLoved = stored.loved.length + sessionFavorites.length;
+  document.getElementById('favCount').textContent = totalLoved;
 }
 
 function renderCard() {
-  if (currentIndex >= deck.length) {
+  if (currentIndex >= sessionDeck.length) {
+    // Session complete — save progress
+    saveSessionProgress();
     showView('done');
     return;
   }
 
-  const q = deck[currentIndex];
+  const q = sessionDeck[currentIndex];
   cardStack.innerHTML = `
     <div class="ghost-card"></div>
     <div class="ghost-card"></div>
@@ -990,6 +1283,45 @@ function animateIn(card) {
 }
 
 // ════════════════════════════════════
+//  SAVE PROGRESS TO STORAGE
+// ════════════════════════════════════
+function saveSessionProgress() {
+  const stored = loadStorage();
+
+  // Add newly seen quote IDs
+  sessionDeck.slice(0, currentIndex).forEach(q => {
+    if (!stored.seen.includes(q.id)) stored.seen.push(q.id);
+  });
+
+  // Add newly loved quotes
+  sessionFavorites.forEach(q => {
+    if (!stored.loved.find(l => l.id === q.id)) stored.loved.push(q);
+  });
+
+  // Add newly passed IDs
+  sessionPassed.forEach(q => {
+    if (!stored.passed.includes(q.id)) stored.passed.push(q.id);
+  });
+
+  saveStorage(stored);
+}
+
+// Also save incrementally after each swipe (so nothing is lost if they close the tab)
+function saveSwipeResult(quote, loved) {
+  const stored = loadStorage();
+
+  if (!stored.seen.includes(quote.id)) stored.seen.push(quote.id);
+
+  if (loved) {
+    if (!stored.loved.find(l => l.id === quote.id)) stored.loved.push(quote);
+  } else {
+    if (!stored.passed.includes(quote.id)) stored.passed.push(quote.id);
+  }
+
+  saveStorage(stored);
+}
+
+// ════════════════════════════════════
 //  DRAG / SWIPE ENGINE
 // ════════════════════════════════════
 let dragState = { active: false, startX: 0, startY: 0, dx: 0, locked: null };
@@ -1013,14 +1345,13 @@ function dragMove(e) {
   const dx = t.clientX - dragState.startX;
   const dy = t.clientY - dragState.startY;
 
-  // Lock axis on first significant movement
   if (!dragState.locked) {
     if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
       dragState.locked = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
     } else return;
   }
 
-  if (dragState.locked === 'v') return; // let page scroll
+  if (dragState.locked === 'v') return;
   e.preventDefault();
   dragState.dx = dx;
   applyDrag(dx);
@@ -1032,7 +1363,6 @@ function dragEnd() {
   resolveDrag(dragState.dx);
 }
 
-// Mouse support
 function mouseStart(e) {
   dragState = { active: true, startX: e.clientX, startY: e.clientY, dx: 0, locked: 'h' };
   getCard().style.transition = 'none';
@@ -1051,7 +1381,6 @@ function applyDrag(dx) {
   const moveY = -Math.abs(dx) * 0.05;
   card.style.transform = `translateX(${dx}px) translateY(${moveY}px) rotate(${rotate}deg)`;
 
-  // Intent overlays
   const t = Math.min(Math.abs(dx) / 100, 1);
   const loveO = document.getElementById('loveOverlay');
   const passO = document.getElementById('passOverlay');
@@ -1065,7 +1394,6 @@ function applyDrag(dx) {
     card.style.boxShadow = `0 4px 40px rgba(0,0,0,0.3)`;
   }
 
-  // Animate ghost cards
   const ghosts = cardStack.querySelectorAll('.ghost-card');
   if (ghosts[0]) ghosts[0].style.transform = `scale(${0.94 + 0.04*t}) translateY(${10 - 8*t}px)`;
   if (ghosts[1]) ghosts[1].style.transform = `scale(${0.88 + 0.04*t}) translateY(${20 - 8*t}px)`;
@@ -1090,7 +1418,6 @@ function snapBack() {
   const passO = document.getElementById('passOverlay');
   if (loveO) loveO.style.opacity = 0;
   if (passO) passO.style.opacity = 0;
-  // Reset ghosts
   const ghosts = cardStack.querySelectorAll('.ghost-card');
   if (ghosts[0]) { ghosts[0].style.transition = 'transform 0.3s'; ghosts[0].style.transform = 'scale(0.94) translateY(10px)'; }
   if (ghosts[1]) { ghosts[1].style.transition = 'transform 0.3s'; ghosts[1].style.transform = 'scale(0.88) translateY(20px)'; }
@@ -1104,16 +1431,18 @@ function flyOut(dir) {
   card.style.transform = `translateX(${x}px) rotate(${x * 0.03}deg)`;
 
   const loved = dir === 'right';
-  const q = deck[currentIndex];
+  const q = sessionDeck[currentIndex];
   history.push({ index: currentIndex, loved });
 
   if (loved) {
-    favorites.push(q);
-    updateFavCount();
-    burstParticles();
+    sessionFavorites.push(q);
   } else {
-    passed.push(q);
+    sessionPassed.push(q);
   }
+
+  // Save immediately so progress isn't lost
+  saveSwipeResult(q, loved);
+  updateFavCount();
 
   // Enable undo
   undoBtn.style.opacity = '1';
@@ -1124,11 +1453,10 @@ function flyOut(dir) {
 }
 
 function buttonSwipe(dir) {
-  if (currentIndex >= deck.length) return;
+  if (currentIndex >= sessionDeck.length) return;
   const card = getCard();
   if (!card) return;
 
-  // Quick preview animation
   const peekX = dir === 'right' ? 30 : -30;
   const overlay = dir === 'right' ? document.getElementById('loveOverlay') : document.getElementById('passOverlay');
   card.style.transition = 'transform 0.12s ease';
@@ -1141,20 +1469,29 @@ function buttonSwipe(dir) {
 function undo() {
   if (history.length === 0) return;
   const last = history.pop();
+  const q = sessionDeck[last.index];
+
   if (last.loved) {
-    favorites.pop();
-    updateFavCount();
+    sessionFavorites = sessionFavorites.filter(f => f.id !== q.id);
   } else {
-    passed.pop();
+    sessionPassed = sessionPassed.filter(p => p.id !== q.id);
   }
+
+  // Also undo from storage
+  const stored = loadStorage();
+  stored.seen = stored.seen.filter(id => id !== q.id);
+  stored.loved = stored.loved.filter(l => l.id !== q.id);
+  stored.passed = stored.passed.filter(id => id !== q.id);
+  saveStorage(stored);
+
   currentIndex = last.index;
+  updateFavCount();
 
   if (history.length === 0) {
     undoBtn.style.opacity = '0';
     undoBtn.style.pointerEvents = 'none';
   }
 
-  // If we were on done screen, switch back
   showView('swipe');
   renderCard();
 }
@@ -1193,29 +1530,47 @@ function burstParticles() {
 // ════════════════════════════════════
 //  FAVORITES VIEW
 // ════════════════════════════════════
+function getAllFavorites() {
+  // Combine stored + session (deduplicated)
+  const stored = loadStorage();
+  const all = [...stored.loved];
+  sessionFavorites.forEach(q => {
+    if (!all.find(a => a.id === q.id)) all.push(q);
+  });
+  return all;
+}
+
 function renderFavorites() {
   const scroll = document.getElementById('favScroll');
   const footer = document.getElementById('favFooter');
+  const allFavs = getAllFavorites();
 
-  if (favorites.length === 0) {
+  if (allFavs.length === 0) {
     scroll.innerHTML = '<div class="fav-empty"><div class="empty-icon">✦</div>No favorites yet.<br>Swipe right on quotes you love.</div>';
     footer.style.display = 'none';
     return;
   }
   footer.style.display = 'flex';
 
-  scroll.innerHTML = favorites.map((q, i) => `
+  scroll.innerHTML = allFavs.map((q, i) => `
     <div class="fav-card" style="animation-delay:${i * 0.04}s">
       <span class="num">${i + 1}</span>
-      <button class="remove" onclick="removeFav(${i})">×</button>
+      <button class="remove" onclick="removeFav(${q.id})">×</button>
       <div class="q">\u201C${q.text}\u201D</div>
       <div class="a">— ${q.author} · ${q.source}</div>
     </div>
   `).join('');
 }
 
-function removeFav(i) {
-  favorites.splice(i, 1);
+function removeFav(quoteId) {
+  // Remove from session
+  sessionFavorites = sessionFavorites.filter(f => f.id !== quoteId);
+
+  // Remove from storage
+  const stored = loadStorage();
+  stored.loved = stored.loved.filter(l => l.id !== quoteId);
+  saveStorage(stored);
+
   updateFavCount();
   renderFavorites();
 }
@@ -1231,34 +1586,68 @@ function copyFavorites() {
 }
 
 function formatFavorites() {
-  if (favorites.length === 0) return 'No favorites selected.';
+  const allFavs = getAllFavorites();
+  if (allFavs.length === 0) return 'No favorites selected.';
+
+  const stored = loadStorage();
+  const totalSeen = stored.seen.length;
+
   return `Bahá'í Quotes — Selected Favorites\n${'═'.repeat(40)}\n\n` +
-    favorites.map((q, i) =>
+    allFavs.map((q, i) =>
       `${i + 1}. "${q.text}"\n   — ${q.author} (${q.source})`
     ).join('\n\n') +
-    `\n\n${'═'.repeat(40)}\nSelected ${favorites.length} of ${deck.length} quotes.`;
+    `\n\n${'═'.repeat(40)}\nSelected ${allFavs.length} favorites out of ${totalSeen} quotes reviewed (${ALL_QUOTES.length} total).`;
 }
 
 // ════════════════════════════════════
 //  DONE VIEW
 // ════════════════════════════════════
 function renderDone() {
-  document.getElementById('doneStats').innerHTML =
-    `You loved <strong>${favorites.length}</strong> out of ${deck.length} quotes.`;
+  const stored = loadStorage();
+  const totalSeen = stored.seen.length;
+  const totalQuotes = ALL_QUOTES.length;
+  const remaining = totalQuotes - totalSeen;
+  const allFavs = getAllFavorites();
+
+  let statsHTML = `This session: loved <strong>${sessionFavorites.length}</strong> of ${sessionDeck.length} quotes.<br>`;
+  statsHTML += `Overall: <strong>${allFavs.length}</strong> favorites from ${totalSeen} reviewed.`;
+
+  if (remaining > 0) {
+    statsHTML += `<br><span style="font-size:12px;color:var(--text-dim)">${remaining} quotes remaining — come back anytime!</span>`;
+  } else {
+    statsHTML += `<br><span style="font-size:12px;color:var(--gold)">You've reviewed every quote!</span>`;
+  }
+
+  document.getElementById('doneStats').innerHTML = statsHTML;
+
+  if (remaining === 0) {
+    document.getElementById('doneTitle').textContent = 'All Complete!';
+  } else {
+    document.getElementById('doneTitle').textContent = 'Session Complete';
+  }
 }
 
-function resetAndRestart() {
-  initState();
-  updateFavCount();
-  undoBtn.style.opacity = '0';
-  undoBtn.style.pointerEvents = 'none';
-  showView('welcome');
+// ════════════════════════════════════
+//  RESET ALL PROGRESS
+// ════════════════════════════════════
+function resetAllProgress() {
+  if (confirm('This will clear all your progress and favorites. Are you sure?')) {
+    clearStorage();
+    sessionDeck = [];
+    currentIndex = 0;
+    sessionFavorites = [];
+    sessionPassed = [];
+    history = [];
+    updateFavCount();
+    setupWelcome();
+  }
 }
 
 // ════════════════════════════════════
 //  SEND RESULTS MODAL
 // ════════════════════════════════════
 function openSendModal() {
+  cameFromDone = true;
   const preview = document.getElementById('sendPreview');
   preview.value = formatFavorites();
   document.getElementById('sentMsg').style.display = 'none';
@@ -1276,7 +1665,6 @@ function sendResults() {
 
   const fullMessage = `From: ${name}\n${note ? 'Note: ' + note + '\n' : ''}\n${body}`;
 
-  // Try native share first (iOS), then copy to clipboard
   if (navigator.share) {
     navigator.share({
       title: `${name}'s Bahá'í Quote Selections`,
@@ -1284,7 +1672,6 @@ function sendResults() {
     }).then(() => {
       showSentConfirmation();
     }).catch(() => {
-      // User cancelled share sheet, try email fallback
       emailFallback(name, note, body);
     });
   } else {
@@ -1293,10 +1680,8 @@ function sendResults() {
 }
 
 function emailFallback(name, note, body) {
-  // Copy to clipboard
   const fullMessage = `From: ${name}\n${note ? 'Note: ' + note + '\n' : ''}\n${body}`;
   navigator.clipboard.writeText(fullMessage).then(() => {
-    // Also open mailto link
     const subject = encodeURIComponent(`${name}'s Bahá'í Quote Selections`);
     const mailBody = encodeURIComponent(fullMessage);
     window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${mailBody}`;
@@ -1310,15 +1695,9 @@ function showSentConfirmation() {
 }
 
 // ════════════════════════════════════
-//  START / INIT
+//  INIT
 // ════════════════════════════════════
-function startSwiping() {
-  initState();
-  showView('swipe');
-  renderCard();
-}
-
-// Don't render cards yet — wait for the welcome screen "Begin" tap
+setupWelcome();
 </script>
 
 </body>

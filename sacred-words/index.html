@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sacred Words">
+<title>Sacred Words</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface-raised: #181818;
+    --border: #222;
+    --border-light: #2a2a2a;
+    --text: #f2ede6;
+    --text-secondary: #777;
+    --text-dim: #555;
+    --love: #ff4458;
+    --love-glow: rgba(255, 68, 88, 0.25);
+    --pass: #555;
+    --gold: #c8a44e;
+    --gold-dim: rgba(200, 164, 78, 0.1);
+    --gold-glow: rgba(200, 164, 78, 0.15);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh;
+    padding-top: calc(var(--safe-top) + 8px);
+    padding-bottom: calc(var(--safe-bottom) + 8px);
+  }
+
+  /* ═══ Header ═══ */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 6px;
+    flex-shrink: 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, #8a6e2f 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    box-shadow: 0 2px 12px rgba(200,164,78,0.2);
+  }
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .header-right { display: flex; gap: 8px; align-items: center; }
+  .pill-btn {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .pill-btn:active { transform: scale(0.95); }
+  .pill-btn.fav-pill { color: var(--gold); border-color: rgba(200,164,78,0.2); }
+  .pill-btn .badge {
+    background: var(--gold-dim);
+    color: var(--gold);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  /* ═══ Progress ═══ */
+  .progress-wrap {
+    padding: 8px 20px 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e0c06a);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* ═══ Card Stack ═══ */
+  .card-stack {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8px 16px;
+    overflow: hidden;
+  }
+
+  /* Ghost cards behind */
+  .ghost-card {
+    position: absolute;
+    width: calc(100% - 56px);
+    max-width: 380px;
+    height: 65%;
+    max-height: 420px;
+    border-radius: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .ghost-card:nth-child(1) {
+    transform: scale(0.94) translateY(10px);
+    opacity: 0.4;
+  }
+  .ghost-card:nth-child(2) {
+    transform: scale(0.88) translateY(20px);
+    opacity: 0.2;
+  }
+
+  /* Main card */
+  .card {
+    position: absolute;
+    width: calc(100% - 32px);
+    max-width: 400px;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 40px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    max-height: 75vh;
+    overflow-y: auto;
+    cursor: grab;
+    will-change: transform;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 10;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+    touch-action: none;
+  }
+  .card:active { cursor: grabbing; }
+
+  .card .ornament {
+    font-size: 10px;
+    letter-spacing: 8px;
+    color: var(--gold);
+    opacity: 0.35;
+    margin-bottom: 28px;
+  }
+
+  .card .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 28px;
+    max-width: 340px;
+  }
+
+  .card .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border-light);
+    margin-bottom: 16px;
+  }
+
+  .card .attribution {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+  .card .source {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  /* Swipe intent overlays */
+  .intent-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    transition: opacity 0.1s;
+  }
+  .intent-overlay.love-intent {
+    background: linear-gradient(135deg, rgba(255,68,88,0.08) 0%, transparent 60%);
+    border: 2px solid transparent;
+  }
+  .intent-overlay.pass-intent {
+    background: linear-gradient(225deg, rgba(100,100,100,0.06) 0%, transparent 60%);
+    border: 2px solid transparent;
+  }
+  .intent-label {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 8px 20px;
+    border-radius: 12px;
+    transform: rotate(-15deg);
+  }
+  .love-intent .intent-label {
+    color: var(--love);
+    border: 3px solid var(--love);
+  }
+  .pass-intent .intent-label {
+    color: var(--pass);
+    border: 3px solid var(--pass);
+    transform: rotate(15deg);
+  }
+
+  /* ═══ Actions Bar ═══ */
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 20px 8px;
+    flex-shrink: 0;
+  }
+
+  .act-btn {
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    font-family: inherit;
+  }
+  .act-btn:active { transform: scale(0.88); }
+
+  .act-btn.small {
+    width: 44px; height: 44px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    font-size: 16px;
+    color: var(--text-secondary);
+  }
+
+  .act-btn.pass {
+    width: 60px; height: 60px;
+    background: var(--surface-raised);
+    border: 2px solid var(--border);
+    color: var(--pass);
+    font-size: 24px;
+  }
+  .act-btn.pass:active { border-color: var(--pass); }
+
+  .act-btn.love {
+    width: 68px; height: 68px;
+    background: linear-gradient(145deg, #1f1215 0%, var(--surface-raised) 100%);
+    border: 2px solid rgba(255,68,88,0.25);
+    color: var(--love);
+    font-size: 28px;
+  }
+  .act-btn.love:active {
+    border-color: var(--love);
+    box-shadow: 0 0 30px var(--love-glow);
+  }
+
+  /* ═══ Particle burst on love ═══ */
+  .particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .particle {
+    position: absolute;
+    font-size: 18px;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  /* ═══ Views ═══ */
+  .view { display: none; }
+  .view.active { display: flex; flex-direction: column; height: 100%; }
+
+  /* ═══ Favorites Panel ═══ */
+  .favorites-view {
+    background: var(--bg);
+  }
+  .fav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .fav-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 0;
+    font-family: inherit;
+  }
+
+  .fav-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 16px;
+  }
+
+  .fav-empty {
+    text-align: center;
+    padding: 80px 30px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .fav-empty .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.5; }
+
+  .fav-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    animation: fadeUp 0.3s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fav-card .q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .fav-card .a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .fav-card .remove {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    opacity: 0.5;
+  }
+  .fav-card .remove:active { opacity: 1; }
+  .fav-card .num {
+    position: absolute;
+    top: 16px; left: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+
+  .fav-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .fav-footer button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .fav-footer button:active { transform: scale(0.97); }
+  .fav-footer .secondary-btn {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .fav-footer .primary-btn {
+    background: linear-gradient(135deg, var(--gold), #b8943f);
+    color: #111;
+  }
+
+  /* ═══ Done Screen ═══ */
+  .done-view { align-items: center; justify-content: center; padding: 40px 24px; }
+  .done-view .star-cluster { font-size: 12px; letter-spacing: 12px; color: var(--gold); opacity: 0.4; margin-bottom: 24px; }
+  .done-view h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .done-view .stats {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 32px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .done-view .stats strong { color: var(--gold); font-weight: 600; }
+  .done-btns { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 280px; }
+  .done-btns button {
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .done-btns button:active { transform: scale(0.97); }
+  .done-btns .gold-btn { background: linear-gradient(135deg, var(--gold), #b8943f); color: #111; }
+  .done-btns .outline-btn { background: var(--surface-raised); border: 1px solid var(--border); color: var(--text-secondary); }
+
+  /* ═══ Send Results Modal ═══ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 300;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px 24px calc(var(--safe-bottom) + 24px);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .modal .subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
+  .modal label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .modal input, .modal textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .modal input:focus, .modal textarea:focus { border-color: var(--gold); }
+  .modal textarea { min-height: 120px; resize: vertical; font-size: 13px; line-height: 1.5; }
+  .modal .preview-toggle {
+    font-size: 12px;
+    color: var(--gold);
+    cursor: pointer;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+  .modal .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+  .modal .btn-row button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .modal .cancel-btn { background: var(--surface-raised); border: 1px solid var(--border); color: var(--text-secondary); }
+  .modal .send-btn { background: linear-gradient(135deg, var(--gold), #b8943f); color: #111; }
+  .modal .sent-msg {
+    text-align: center;
+    padding: 20px;
+    color: var(--gold);
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* ═══ Welcome / Onboarding ═══ */
+  .welcome-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .welcome-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .welcome-icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, #8a6e2f 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(200,164,78,0.25);
+    flex-shrink: 0;
+  }
+
+  .welcome-view h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+
+  .welcome-view .tagline {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .how-it-works {
+    width: 100%;
+    text-align: left;
+  }
+
+  .how-it-works h3 {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .step-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .step-icon.love-icon { color: var(--love); }
+  .step-icon.pass-icon { color: var(--pass); }
+  .step-icon.star-icon { color: var(--gold); }
+
+  .step-content {
+    min-width: 0;
+  }
+  .step-content strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 1px;
+    color: var(--text);
+  }
+  .step-content span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    display: block;
+  }
+
+  .begin-btn {
+    margin-top: 28px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--gold), #b8943f);
+    color: #111;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+    box-shadow: 0 4px 20px rgba(200,164,78,0.25);
+    flex-shrink: 0;
+  }
+  .begin-btn:active { transform: scale(0.97); }
+
+  .welcome-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ═══ WELCOME VIEW ═══ -->
+  <div class="view active" id="welcomeView">
+    <div class="welcome-view">
+      <div class="welcome-inner">
+        <div class="welcome-icon">✦</div>
+        <h1>Sacred Words</h1>
+        <p class="tagline">Swipe through Bahá'í quotes and pick your favorites.</p>
+
+        <div class="how-it-works">
+          <h3>How It Works</h3>
+
+          <div class="step">
+            <div class="step-icon love-icon">♥</div>
+            <div class="step-content">
+              <strong>Swipe Right = Love It</strong>
+              <span>Drag the card right or tap the heart to save a quote.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-icon pass-icon">✕</div>
+            <div class="step-content">
+              <strong>Swipe Left = Pass</strong>
+              <span>Not feeling it? Drag left or tap X to skip.</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-icon star-icon">★</div>
+            <div class="step-content">
+              <strong>Review & Send</strong>
+              <span>When done, review your picks and send them over.</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="begin-btn" onclick="startSwiping()">Begin</button>
+        <p class="welcome-footer">30 quotes · about 3 minutes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SWIPE VIEW ═══ -->
+  <div class="view" id="swipeView">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">✦</div>
+        <span class="logo-text">Sacred Words</span>
+      </div>
+      <div class="header-right">
+        <button class="pill-btn fav-pill" onclick="showView('favorites')">
+          ★ <span class="badge" id="favCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 / 0</div>
+    </div>
+
+    <div class="card-stack" id="cardStack"></div>
+
+    <div class="actions" id="actions">
+      <button class="act-btn small" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none" aria-label="Undo">↩</button>
+      <button class="act-btn pass" onclick="buttonSwipe('left')" aria-label="Pass">✕</button>
+      <button class="act-btn love" onclick="buttonSwipe('right')" aria-label="Love">♥</button>
+      <button class="act-btn small" style="opacity:0;pointer-events:none">⠀</button>
+    </div>
+  </div>
+
+  <!-- ═══ FAVORITES VIEW ═══ -->
+  <div class="view" id="favoritesView">
+    <div class="fav-header">
+      <button class="back-btn" onclick="showView('swipe')">← Back</button>
+      <h2>Your Favorites</h2>
+      <span style="width:50px"></span>
+    </div>
+    <div class="fav-scroll" id="favScroll"></div>
+    <div class="fav-footer" id="favFooter">
+      <button class="secondary-btn" onclick="copyFavorites()">Copy All</button>
+      <button class="primary-btn" onclick="openSendModal()">Send Results →</button>
+    </div>
+  </div>
+
+  <!-- ═══ DONE VIEW ═══ -->
+  <div class="view" id="doneView">
+    <header>
+      <div class="logo">
+        <div class="logo-icon">✦</div>
+        <span class="logo-text">Sacred Words</span>
+      </div>
+    </header>
+    <div class="done-view" style="flex:1;display:flex;">
+      <div class="star-cluster">✦ ✦ ✦</div>
+      <h2>All Done</h2>
+      <div class="stats" id="doneStats"></div>
+      <div class="done-btns">
+        <button class="gold-btn" onclick="openSendModal()">Send Results to Josh →</button>
+        <button class="outline-btn" onclick="showView('favorites')">Review Favorites</button>
+        <button class="outline-btn" onclick="resetAndRestart()">Start Over</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Send Results Modal -->
+<div class="modal-overlay" id="sendModal">
+  <div class="modal">
+    <h3>Send Your Selections</h3>
+    <p class="subtitle">We'll compile your favorites and send them.</p>
+
+    <label>Your Name</label>
+    <input type="text" id="senderName" placeholder="e.g. Collis" value="Collis">
+
+    <label>Message (optional)</label>
+    <input type="text" id="senderNote" placeholder="Any notes about your picks...">
+
+    <label>Preview</label>
+    <textarea id="sendPreview" readonly></textarea>
+
+    <div class="btn-row">
+      <button class="cancel-btn" onclick="closeSendModal()">Cancel</button>
+      <button class="send-btn" onclick="sendResults()">Copy & Share</button>
+    </div>
+
+    <div class="sent-msg" id="sentMsg" style="display:none">✓ Copied to clipboard! Share via Messages, Email, or wherever you like.</div>
+  </div>
+</div>
+
+<!-- Particle container -->
+<div class="particle-container" id="particles"></div>
+
+<script>
+// ════════════════════════════════════
+//  QUOTE DATA
+// ════════════════════════════════════
+const quotes = [
+  { text: "The earth is but one country, and mankind its citizens.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "Let your vision be world-embracing, rather than confined to your own self.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "So powerful is the light of unity that it can illuminate the whole earth.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { text: "Be generous in prosperity, and thankful in adversity. Be worthy of the trust of thy neighbor, and look upon him with a bright and friendly face.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "The best beloved of all things in My sight is Justice; turn not away therefrom if thou desirest Me.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "Noble have I created thee, yet thou hast abased thyself. Rise then unto that for which thou wast created.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "Ye are the fruits of one tree, and the leaves of one branch. Deal ye one with another with the utmost love and harmony.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "It is not for him to pride himself who loveth his own country, but rather for him who loveth the whole world.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { text: "The light of a good character surpasseth the light of the sun and the radiance thereof.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { text: "Truthfulness is the foundation of all human virtues.", author: "Bahá'u'lláh", source: "Advent of Divine Justice" },
+  { text: "Regard man as a mine rich in gems of inestimable value. Education can, alone, cause it to reveal its treasures.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "In the garden of thy heart plant naught but the rose of love.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "Knowledge is as wings to man's life, and a ladder for his ascent.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { text: "All men have been created to carry forward an ever-advancing civilization.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "A kindly tongue is the lodestone of the hearts of men. It is the bread of the spirit, it clotheth the words with meaning.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { text: "O Son of Man! I loved thy creation, hence I created thee. Wherefore, do thou love Me, that I may name thy name and fill thy soul with the spirit of life.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "O friend, the heart is the dwelling of eternal mysteries, make it not the home of fleeting fancies.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "To give and to be generous are attributes of Mine; well is it with him that adorneth himself with My virtues.", author: "Bahá'u'lláh", source: "The Hidden Words" },
+  { text: "Consort with all men in a spirit of friendliness and fellowship.", author: "Bahá'u'lláh", source: "Tablets of Bahá'u'lláh" },
+  { text: "Set your faces towards unity, and let the radiance of its light shine upon you.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "Arts, crafts and sciences uplift the world of being, and are conducive to its exaltation.", author: "Bahá'u'lláh", source: "Epistle to the Son of the Wolf" },
+  { text: "Be anxiously concerned with the needs of the age ye live in, and center your deliberations on its exigencies and requirements.", author: "Bahá'u'lláh", source: "Gleanings" },
+  { text: "Do not be content with showing friendship in words alone, let your heart burn with loving kindness for all who may cross your path.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "When a thought of war comes, oppose it by a stronger thought of peace. A thought of hatred must be destroyed by a more powerful thought of love.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "The reality of man is his thought, not his material body.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "The world of humanity has two wings — one is women and the other men. Not until both wings are equally developed can the bird fly.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "This is worship: to serve mankind and to minister to the needs of the people.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "If you desire with all your heart, friendship with every race on earth, your thought, spiritual and positive, will spread; it will become the desire of others.", author: "'Abdu'l-Bahá", source: "Paris Talks" },
+  { text: "Happy the soul that shall forget his own good, and like the chosen ones of God, vie with his fellows in service to the good of all.", author: "'Abdu'l-Bahá", source: "The Secret of Divine Civilization" },
+  { text: "Close your eyes to racial differences, and welcome all with the light of oneness.", author: "'Abdu'l-Bahá", source: "The Promulgation of Universal Peace" },
+];
+
+// ════════════════════════════════════
+//  STATE
+// ════════════════════════════════════
+let deck, currentIndex, favorites, passed, history;
+const RECIPIENT_EMAIL = "josh@fullstackfilms.com";
+
+function initState() {
+  deck = shuffle([...quotes]);
+  currentIndex = 0;
+  favorites = [];
+  passed = [];
+  history = [];
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ════════════════════════════════════
+//  VIEW MANAGEMENT
+// ════════════════════════════════════
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(name + 'View').classList.add('active');
+
+  if (name === 'favorites') renderFavorites();
+  if (name === 'done') renderDone();
+}
+
+// ════════════════════════════════════
+//  CARD RENDERING & ANIMATION
+// ════════════════════════════════════
+const cardStack = document.getElementById('cardStack');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const undoBtn = document.getElementById('undoBtn');
+
+function updateProgress() {
+  const total = deck.length;
+  const pct = total > 0 ? (currentIndex / total * 100) : 100;
+  progressFill.style.width = pct + '%';
+  progressLabel.textContent = `${currentIndex} / ${total}`;
+}
+
+function updateFavCount() {
+  document.getElementById('favCount').textContent = favorites.length;
+}
+
+function renderCard() {
+  if (currentIndex >= deck.length) {
+    showView('done');
+    return;
+  }
+
+  const q = deck[currentIndex];
+  cardStack.innerHTML = `
+    <div class="ghost-card"></div>
+    <div class="ghost-card"></div>
+    <div class="card" id="activeCard">
+      <div class="intent-overlay love-intent" id="loveOverlay">
+        <div class="intent-label">LOVE</div>
+      </div>
+      <div class="intent-overlay pass-intent" id="passOverlay">
+        <div class="intent-label">NOPE</div>
+      </div>
+      <div class="ornament">✦ ✦ ✦</div>
+      <div class="quote-text">\u201C${q.text}\u201D</div>
+      <div class="divider"></div>
+      <div class="attribution">${q.author}</div>
+      <div class="source">${q.source}</div>
+    </div>
+  `;
+
+  updateProgress();
+  const card = document.getElementById('activeCard');
+  animateIn(card);
+  bindDrag(card);
+}
+
+function animateIn(card) {
+  card.style.opacity = '0';
+  card.style.transform = 'scale(0.92) translateY(16px)';
+  card.style.transition = 'none';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      card.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease';
+      card.style.transform = 'scale(1) translateY(0)';
+      card.style.opacity = '1';
+    });
+  });
+}
+
+// ════════════════════════════════════
+//  DRAG / SWIPE ENGINE
+// ════════════════════════════════════
+let dragState = { active: false, startX: 0, startY: 0, dx: 0, locked: null };
+
+function bindDrag(card) {
+  card.addEventListener('touchstart', dragStart, { passive: true });
+  card.addEventListener('touchmove', dragMove, { passive: false });
+  card.addEventListener('touchend', dragEnd, { passive: true });
+  card.addEventListener('mousedown', mouseStart);
+}
+
+function dragStart(e) {
+  const t = e.touches[0];
+  dragState = { active: true, startX: t.clientX, startY: t.clientY, dx: 0, locked: null };
+  getCard().style.transition = 'none';
+}
+
+function dragMove(e) {
+  if (!dragState.active) return;
+  const t = e.touches[0];
+  const dx = t.clientX - dragState.startX;
+  const dy = t.clientY - dragState.startY;
+
+  // Lock axis on first significant movement
+  if (!dragState.locked) {
+    if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+      dragState.locked = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    } else return;
+  }
+
+  if (dragState.locked === 'v') return; // let page scroll
+  e.preventDefault();
+  dragState.dx = dx;
+  applyDrag(dx);
+}
+
+function dragEnd() {
+  if (!dragState.active) return;
+  dragState.active = false;
+  resolveDrag(dragState.dx);
+}
+
+// Mouse support
+function mouseStart(e) {
+  dragState = { active: true, startX: e.clientX, startY: e.clientY, dx: 0, locked: 'h' };
+  getCard().style.transition = 'none';
+  const move = (ev) => { dragState.dx = ev.clientX - dragState.startX; applyDrag(dragState.dx); };
+  const up = () => { dragState.active = false; resolveDrag(dragState.dx); document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+  document.addEventListener('mousemove', move);
+  document.addEventListener('mouseup', up);
+}
+
+function getCard() { return document.getElementById('activeCard'); }
+
+function applyDrag(dx) {
+  const card = getCard();
+  if (!card) return;
+  const rotate = dx * 0.06;
+  const moveY = -Math.abs(dx) * 0.05;
+  card.style.transform = `translateX(${dx}px) translateY(${moveY}px) rotate(${rotate}deg)`;
+
+  // Intent overlays
+  const t = Math.min(Math.abs(dx) / 100, 1);
+  const loveO = document.getElementById('loveOverlay');
+  const passO = document.getElementById('passOverlay');
+  if (dx > 0) {
+    loveO.style.opacity = t;
+    passO.style.opacity = 0;
+    card.style.boxShadow = `0 4px 40px rgba(0,0,0,0.3), 0 0 ${60*t}px rgba(255,68,88,${0.15*t})`;
+  } else if (dx < 0) {
+    passO.style.opacity = t;
+    loveO.style.opacity = 0;
+    card.style.boxShadow = `0 4px 40px rgba(0,0,0,0.3)`;
+  }
+
+  // Animate ghost cards
+  const ghosts = cardStack.querySelectorAll('.ghost-card');
+  if (ghosts[0]) ghosts[0].style.transform = `scale(${0.94 + 0.04*t}) translateY(${10 - 8*t}px)`;
+  if (ghosts[1]) ghosts[1].style.transform = `scale(${0.88 + 0.04*t}) translateY(${20 - 8*t}px)`;
+}
+
+function resolveDrag(dx) {
+  const THRESHOLD = 90;
+  if (Math.abs(dx) > THRESHOLD) {
+    flyOut(dx > 0 ? 'right' : 'left');
+  } else {
+    snapBack();
+  }
+}
+
+function snapBack() {
+  const card = getCard();
+  if (!card) return;
+  card.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s';
+  card.style.transform = 'translateX(0) translateY(0) rotate(0)';
+  card.style.boxShadow = '0 4px 40px rgba(0,0,0,0.3)';
+  const loveO = document.getElementById('loveOverlay');
+  const passO = document.getElementById('passOverlay');
+  if (loveO) loveO.style.opacity = 0;
+  if (passO) passO.style.opacity = 0;
+  // Reset ghosts
+  const ghosts = cardStack.querySelectorAll('.ghost-card');
+  if (ghosts[0]) { ghosts[0].style.transition = 'transform 0.3s'; ghosts[0].style.transform = 'scale(0.94) translateY(10px)'; }
+  if (ghosts[1]) { ghosts[1].style.transition = 'transform 0.3s'; ghosts[1].style.transform = 'scale(0.88) translateY(20px)'; }
+}
+
+function flyOut(dir) {
+  const card = getCard();
+  if (!card) return;
+  const x = dir === 'right' ? window.innerWidth * 1.5 : -window.innerWidth * 1.5;
+  card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 1, 1)';
+  card.style.transform = `translateX(${x}px) rotate(${x * 0.03}deg)`;
+
+  const loved = dir === 'right';
+  const q = deck[currentIndex];
+  history.push({ index: currentIndex, loved });
+
+  if (loved) {
+    favorites.push(q);
+    updateFavCount();
+    burstParticles();
+  } else {
+    passed.push(q);
+  }
+
+  // Enable undo
+  undoBtn.style.opacity = '1';
+  undoBtn.style.pointerEvents = 'auto';
+
+  currentIndex++;
+  setTimeout(renderCard, 320);
+}
+
+function buttonSwipe(dir) {
+  if (currentIndex >= deck.length) return;
+  const card = getCard();
+  if (!card) return;
+
+  // Quick preview animation
+  const peekX = dir === 'right' ? 30 : -30;
+  const overlay = dir === 'right' ? document.getElementById('loveOverlay') : document.getElementById('passOverlay');
+  card.style.transition = 'transform 0.12s ease';
+  card.style.transform = `translateX(${peekX}px) rotate(${peekX * 0.06}deg)`;
+  if (overlay) overlay.style.opacity = '0.8';
+
+  setTimeout(() => flyOut(dir), 120);
+}
+
+function undo() {
+  if (history.length === 0) return;
+  const last = history.pop();
+  if (last.loved) {
+    favorites.pop();
+    updateFavCount();
+  } else {
+    passed.pop();
+  }
+  currentIndex = last.index;
+
+  if (history.length === 0) {
+    undoBtn.style.opacity = '0';
+    undoBtn.style.pointerEvents = 'none';
+  }
+
+  // If we were on done screen, switch back
+  showView('swipe');
+  renderCard();
+}
+
+// ════════════════════════════════════
+//  PARTICLES
+// ════════════════════════════════════
+function burstParticles() {
+  const container = document.getElementById('particles');
+  const emojis = ['♥', '✦', '★', '❤'];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  for (let i = 0; i < 8; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = cx + 'px';
+    p.style.top = cy + 'px';
+    p.style.color = Math.random() > 0.5 ? '#ff4458' : '#c8a44e';
+    container.appendChild(p);
+
+    const angle = (Math.PI * 2 / 8) * i + (Math.random() - 0.5) * 0.5;
+    const dist = 60 + Math.random() * 80;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - 40;
+
+    p.animate([
+      { transform: 'translate(0,0) scale(0.5)', opacity: 1 },
+      { transform: `translate(${dx}px, ${dy}px) scale(1.2)`, opacity: 0 }
+    ], { duration: 600 + Math.random() * 300, easing: 'cubic-bezier(0.2, 0.8, 0.3, 1)' })
+    .onfinish = () => p.remove();
+  }
+}
+
+// ════════════════════════════════════
+//  FAVORITES VIEW
+// ════════════════════════════════════
+function renderFavorites() {
+  const scroll = document.getElementById('favScroll');
+  const footer = document.getElementById('favFooter');
+
+  if (favorites.length === 0) {
+    scroll.innerHTML = '<div class="fav-empty"><div class="empty-icon">✦</div>No favorites yet.<br>Swipe right on quotes you love.</div>';
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = 'flex';
+
+  scroll.innerHTML = favorites.map((q, i) => `
+    <div class="fav-card" style="animation-delay:${i * 0.04}s">
+      <span class="num">${i + 1}</span>
+      <button class="remove" onclick="removeFav(${i})">×</button>
+      <div class="q">\u201C${q.text}\u201D</div>
+      <div class="a">— ${q.author} · ${q.source}</div>
+    </div>
+  `).join('');
+}
+
+function removeFav(i) {
+  favorites.splice(i, 1);
+  updateFavCount();
+  renderFavorites();
+}
+
+function copyFavorites() {
+  const text = formatFavorites();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.secondary-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+function formatFavorites() {
+  if (favorites.length === 0) return 'No favorites selected.';
+  return `Bahá'í Quotes — Selected Favorites\n${'═'.repeat(40)}\n\n` +
+    favorites.map((q, i) =>
+      `${i + 1}. "${q.text}"\n   — ${q.author} (${q.source})`
+    ).join('\n\n') +
+    `\n\n${'═'.repeat(40)}\nSelected ${favorites.length} of ${deck.length} quotes.`;
+}
+
+// ════════════════════════════════════
+//  DONE VIEW
+// ════════════════════════════════════
+function renderDone() {
+  document.getElementById('doneStats').innerHTML =
+    `You loved <strong>${favorites.length}</strong> out of ${deck.length} quotes.`;
+}
+
+function resetAndRestart() {
+  initState();
+  updateFavCount();
+  undoBtn.style.opacity = '0';
+  undoBtn.style.pointerEvents = 'none';
+  showView('welcome');
+}
+
+// ════════════════════════════════════
+//  SEND RESULTS MODAL
+// ════════════════════════════════════
+function openSendModal() {
+  const preview = document.getElementById('sendPreview');
+  preview.value = formatFavorites();
+  document.getElementById('sentMsg').style.display = 'none';
+  document.getElementById('sendModal').classList.add('open');
+}
+
+function closeSendModal() {
+  document.getElementById('sendModal').classList.remove('open');
+}
+
+function sendResults() {
+  const name = document.getElementById('senderName').value || 'Anonymous';
+  const note = document.getElementById('senderNote').value;
+  const body = document.getElementById('sendPreview').value;
+
+  const fullMessage = `From: ${name}\n${note ? 'Note: ' + note + '\n' : ''}\n${body}`;
+
+  // Try native share first (iOS), then copy to clipboard
+  if (navigator.share) {
+    navigator.share({
+      title: `${name}'s Bahá'í Quote Selections`,
+      text: fullMessage,
+    }).then(() => {
+      showSentConfirmation();
+    }).catch(() => {
+      // User cancelled share sheet, try email fallback
+      emailFallback(name, note, body);
+    });
+  } else {
+    emailFallback(name, note, body);
+  }
+}
+
+function emailFallback(name, note, body) {
+  // Copy to clipboard
+  const fullMessage = `From: ${name}\n${note ? 'Note: ' + note + '\n' : ''}\n${body}`;
+  navigator.clipboard.writeText(fullMessage).then(() => {
+    // Also open mailto link
+    const subject = encodeURIComponent(`${name}'s Bahá'í Quote Selections`);
+    const mailBody = encodeURIComponent(fullMessage);
+    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${mailBody}`;
+    showSentConfirmation();
+  });
+}
+
+function showSentConfirmation() {
+  document.getElementById('sentMsg').style.display = 'block';
+  setTimeout(closeSendModal, 2500);
+}
+
+// ════════════════════════════════════
+//  START / INIT
+// ════════════════════════════════════
+function startSwiping() {
+  initState();
+  showView('swipe');
+  renderCard();
+}
+
+// Don't render cards yet — wait for the welcome screen "Begin" tap
+</script>
+
+</body>
+</html>

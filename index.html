@@ -2,46 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Tools — Josh Janssen</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   body {
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
     background: #080808;
     color: #f2ede6;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 24px 60px;
+    justify-content: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 60px) 20px calc(env(safe-area-inset-bottom, 0px) + 40px);
     -webkit-font-smoothing: antialiased;
   }
 
   .header {
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 40px;
   }
 
   .header h1 {
-    font-size: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
     margin-bottom: 8px;
   }
 
   .header p {
-    color: #777;
-    font-size: 15px;
+    color: #666;
+    font-size: 14px;
     font-weight: 400;
+    line-height: 1.5;
   }
 
   .tools-grid {
     width: 100%;
-    max-width: 560px;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -52,9 +58,9 @@
     align-items: center;
     gap: 16px;
     background: #111;
-    border: 1px solid #222;
-    border-radius: 16px;
-    padding: 20px;
+    border: 1px solid #1e1e1e;
+    border-radius: 18px;
+    padding: 18px 20px;
     text-decoration: none;
     color: inherit;
     transition: all 0.2s;
@@ -63,14 +69,13 @@
   .tool-card:hover {
     border-color: #333;
     background: #151515;
-    transform: translateY(-1px);
   }
 
-  .tool-card:active { transform: scale(0.99); }
+  .tool-card:active { transform: scale(0.98); }
 
   .tool-icon {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -85,27 +90,30 @@
   }
 
   .tool-info h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 3px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
   }
 
   .tool-info p {
-    font-size: 13px;
-    color: #777;
-    line-height: 1.4;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.45;
   }
 
   .tool-arrow {
     color: #444;
-    font-size: 18px;
+    font-size: 16px;
     flex-shrink: 0;
   }
 
   .footer {
-    margin-top: 60px;
-    font-size: 12px;
-    color: #333;
+    margin-top: 48px;
+    font-size: 11px;
+    color: #2a2a2a;
+    letter-spacing: 0.04em;
   }
 </style>
 </head>
@@ -113,21 +121,21 @@
 
   <div class="header">
     <h1>Tools</h1>
-    <p>Things I've built for people.</p>
+    <p>Small things, built for people I care about.</p>
   </div>
 
   <div class="tools-grid">
 
     <a href="sacred-words/" class="tool-card">
-      <div class="tool-icon" style="background: linear-gradient(135deg, #c8a44e, #8a6e2f);">✦</div>
+      <div class="tool-icon" style="background: linear-gradient(135deg, #c8a44e, #8a6e2f); box-shadow: 0 2px 12px rgba(200,164,78,0.2);">✦</div>
       <div class="tool-info">
         <h2>Sacred Words</h2>
-        <p>Swipe through Bah&aacute;&rsquo;&iacute; quotes and pick your favorites.</p>
+        <p>Discover the Bahá'í quotes that speak to your heart and share them with Josh.</p>
       </div>
-      <div class="tool-arrow">&rarr;</div>
+      <div class="tool-arrow">&rsaquo;</div>
     </a>
 
-    <!-- Add more tools here as cards -->
+    <!-- Add more tools here -->
 
   </div>
 

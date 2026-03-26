@@ -269,6 +269,22 @@
     transform: rotate(15deg);
   }
 
+  /* ═══ Swipe Hints ═══ */
+  .swipe-hints {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 32px 2px;
+    flex-shrink: 0;
+  }
+  .hint {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    opacity: 0.35;
+  }
+  .hint-left { color: var(--text-secondary); }
+  .hint-right { color: var(--love); }
+
   /* ═══ Actions Bar ═══ */
   .actions {
     display: flex;
@@ -896,6 +912,11 @@
     </div>
 
     <div class="card-stack" id="cardStack"></div>
+
+    <div class="swipe-hints">
+      <div class="hint hint-left">← Next</div>
+      <div class="hint hint-right">Love →</div>
+    </div>
 
     <div class="actions" id="actions">
       <button class="act-btn small" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none" aria-label="Undo">↩</button>

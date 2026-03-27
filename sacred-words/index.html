@@ -269,11 +269,13 @@
     transform: rotate(15deg);
   }
 
-  /* ═══ Swipe Hints ═══ */
+  /* ═══ Swipe Hints (bottom bar) ═══ */
   .swipe-hints {
     display: flex;
-    justify-content: space-between;
-    padding: 8px 24px 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px 6px;
     flex-shrink: 0;
   }
   .hint {
@@ -283,41 +285,22 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 14px;
-    border-radius: 20px;
+    padding: 8px 18px;
+    border-radius: 22px;
     background: var(--surface);
     border: 1px solid var(--border);
+    font-family: inherit;
+    cursor: default;
   }
   .hint-left { color: var(--text-secondary); }
   .hint-right { color: var(--love); border-color: rgba(255,68,88,0.15); }
-
-  /* ═══ Actions Bar ═══ */
-  .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 20px 4px;
-    flex-shrink: 0;
-  }
-  .act-btn {
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .hint-undo {
+    color: var(--text-dim);
     cursor: pointer;
     transition: all 0.15s;
-    position: relative;
-    font-family: inherit;
+    padding: 8px 14px;
   }
-  .act-btn:active { transform: scale(0.88); }
-  .act-btn.small {
-    width: 44px; height: 44px;
-    background: var(--surface-raised);
-    border: 1px solid var(--border);
-    font-size: 16px;
-    color: var(--text-secondary);
-  }
+  .hint-undo:active { transform: scale(0.93); }
 
   /* ═══ Particle burst ═══ */
   .particle-container {
@@ -831,7 +814,7 @@
       <div class="welcome-inner">
         <div class="welcome-icon">✦</div>
         <h1>Sacred Words</h1>
-        <p class="tagline">Discover the quotes that speak to your heart — then share your favorites with Josh.</p>
+        <p class="tagline">Discover the quotes that speak to your heart.</p>
 
         <!-- Session progress (filled dynamically) -->
         <div class="session-progress" id="sessionProgress" style="display:none">
@@ -886,7 +869,7 @@
             <div class="step-icon star-icon">★</div>
             <div class="step-content">
               <strong>Review & Send</strong>
-              <span>When done, review your picks and send them to Josh.</span>
+              <span>When done, review your picks and share them.</span>
             </div>
           </div>
         </div>
@@ -921,11 +904,8 @@
 
     <div class="swipe-hints">
       <div class="hint hint-left">← Next</div>
+      <button class="hint hint-undo" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none">↩ Undo</button>
       <div class="hint hint-right">♥ Love →</div>
-    </div>
-
-    <div class="actions" id="actions">
-      <button class="act-btn small" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none" aria-label="Undo">↩</button>
     </div>
   </div>
 
@@ -956,7 +936,7 @@
       <h2 id="doneTitle">Session Complete</h2>
       <div class="stats" id="doneStats"></div>
       <div class="done-btns">
-        <button class="gold-btn" onclick="openSendModal()">Send Results to Josh →</button>
+        <button class="gold-btn" onclick="openSendModal()">Share Favorites →</button>
         <button class="outline-btn" onclick="showView('favorites')">Review Favorites</button>
         <button class="outline-btn" onclick="backToWelcome()">Back to Home</button>
       </div>
@@ -968,11 +948,11 @@
 <!-- Send Results Modal -->
 <div class="modal-overlay" id="sendModal">
   <div class="modal">
-    <h3>Send Your Selections</h3>
-    <p class="subtitle">We'll compile your favorites and send them.</p>
+    <h3>Share Your Favorites</h3>
+    <p class="subtitle">Send your picks to a friend or save them for yourself.</p>
 
     <label>Your Name</label>
-    <input type="text" id="senderName" placeholder="e.g. Collis" value="Collis">
+    <input type="text" id="senderName" placeholder="Your name">
 
     <label>Message (optional)</label>
     <input type="text" id="senderNote" placeholder="Any notes about your picks...">
@@ -1236,7 +1216,7 @@ let history = [];           // undo stack for this session
 let selectedMinutes = 10;   // default time selection
 let cameFromDone = false;   // track if favorites was opened from done screen
 const SECS_PER_QUOTE = 12;  // estimated seconds to read + swipe
-const RECIPIENT_EMAIL = "josh@fullstackfilms.com";
+const RECIPIENT_EMAIL = ""; // user chooses recipient via share sheet
 
 // ════════════════════════════════════
 //  WELCOME SCREEN SETUP
@@ -1292,7 +1272,7 @@ function setupWelcome() {
 
     // Add a send button if they have favorites
     if (allLoved.length > 0) {
-      beginBtn.textContent = 'Send Results to Josh →';
+      beginBtn.textContent = 'Share Favorites →';
       beginBtn.disabled = false;
       beginBtn.onclick = () => {
         // Load all loved quotes into sessionFavorites for sending
@@ -1868,7 +1848,7 @@ function emailFallback(name, note, body) {
   navigator.clipboard.writeText(fullMessage).then(() => {
     const subject = encodeURIComponent(`${name}'s Bahá'í Quote Selections`);
     const mailBody = encodeURIComponent(fullMessage);
-    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${mailBody}`;
+    window.location.href = `mailto:?subject=${subject}&body=${mailBody}`;
     showSentConfirmation();
   });
 }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiant Heart â Book Questionnaire</title>
+<title>Radiant Heart — Book Questionnaire</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -48,7 +48,186 @@
     top: 0; left: 0; right: 0; bottom: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     opacity: 0.5;
-  }  transition: border-color 0.2s;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .hero .subtitle {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .hero .intro {
+    max-width: 560px;
+    margin: 24px auto 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--sand);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--warm-brown));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  .section {
+    margin-top: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .section-number {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--deep-brown);
+  }
+  .section-desc {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .question {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .question:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .question.answered {
+    border-color: var(--green);
+    background: linear-gradient(135deg, var(--white) 0%, var(--green-light) 100%);
+  }
+  .question-label {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .question-label .q-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.8rem;
+    color: var(--warm-brown);
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 1px 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .question-context {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    margin-left: 36px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 36px;
+  }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.9rem;
+  }
+  .option:hover {
+    background: var(--cream);
+    border-color: var(--accent);
+  }
+  .option.selected {
+    background: var(--cream);
+    border-color: var(--warm-brown);
+    font-weight: 500;
+  }
+  .option input[type="radio"],
+  .option input[type="checkbox"] {
+    accent-color: var(--warm-brown);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  textarea, input[type="text"], input[type="number"] {
+    width: 100%;
+    margin-left: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--text);
+    transition: border-color 0.2s;
     resize: vertical;
   }
   textarea:focus, input[type="text"]:focus, input[type="number"]:focus {
@@ -168,7 +347,7 @@
   <h1>Radiant Heart</h1>
   <div class="subtitle">Book Questionnaire</div>
   <p class="intro">
-    Hey Collis â we're getting close to making this book real. These questions will help us nail down the physical object: how it looks, feels, and comes together. Take your time, skip anything you're not sure about yet.
+    Hey Collis — we're getting close to making this book real. These questions will help us nail down the physical object: how it looks, feels, and comes together. Take your time, skip anything you're not sure about yet.
   </p>
 </div>
 
@@ -185,16 +364,16 @@
       <span class="section-number">01</span>
       <h2 class="section-title">The Vision</h2>
     </div>
-    <p class="section-desc">Big picture stuff â what this book is and who it's for.</p>
+    <p class="section-desc">Big picture stuff — what this book is and who it's for.</p>
 
     <div class="question" data-q="1">
       <div class="question-label"><span class="q-num">01</span> Who is this book for?</div>
       <div class="question-context">Is it mainly a gift for family and Baha'i friends? Something to sell through Baha'i Blog? A broader coffee table book for anyone? This changes everything about the run size and production quality.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q1" value="Personal gifts for family and close friends (10â30 copies)"> Personal gifts for family and close friends (10â30 copies)</label>
-        <label class="option"><input type="radio" name="q1" value="Gifts for the wider Baha'i community (50â100 copies)"> Gifts for the wider Baha'i community (50â100 copies)</label>
-        <label class="option"><input type="radio" name="q1" value="Sell through Baha'i Blog / Baha'i bookshops (200â500 copies)"> Sell through Baha'i Blog / Baha'i bookshops (200â500 copies)</label>
-        <label class="option"><input type="radio" name="q1" value="Broad audience â a beautiful book anyone could pick up (500+ copies)"> Broad audience â a beautiful book anyone could pick up (500+ copies)</label>
+        <label class="option"><input type="radio" name="q1" value="Personal gifts for family and close friends (10–30 copies)"> Personal gifts for family and close friends (10–30 copies)</label>
+        <label class="option"><input type="radio" name="q1" value="Gifts for the wider Baha'i community (50–100 copies)"> Gifts for the wider Baha'i community (50–100 copies)</label>
+        <label class="option"><input type="radio" name="q1" value="Sell through Baha'i Blog / Baha'i bookshops (200–500 copies)"> Sell through Baha'i Blog / Baha'i bookshops (200–500 copies)</label>
+        <label class="option"><input type="radio" name="q1" value="Broad audience — a beautiful book anyone could pick up (500+ copies)"> Broad audience — a beautiful book anyone could pick up (500+ copies)</label>
       </div>
     </div>
 
@@ -210,7 +389,7 @@
       <div class="question-label"><span class="q-num">03</span> Should the book include anything beyond quotes + photography?</div>
       <div class="question-context">Some options: short personal reflections from you, thematic introductions for each section, a foreword, brief context about the Baha'i Faith for non-Baha'i readers, an index of sources.</div>
       <div class="options">
-        <label class="option"><input type="checkbox" name="q3" value="Just quotes and photography â let them speak for themselves"> Just quotes and photography â let them speak for themselves</label>
+        <label class="option"><input type="checkbox" name="q3" value="Just quotes and photography — let them speak for themselves"> Just quotes and photography — let them speak for themselves</label>
         <label class="option"><input type="checkbox" name="q3" value="Short thematic introductions for each section"> Short thematic introductions for each section</label>
         <label class="option"><input type="checkbox" name="q3" value="A personal foreword or letter from me"> A personal foreword or letter from me</label>
         <label class="option"><input type="checkbox" name="q3" value="Brief context about the Baha'i Faith for new readers"> Brief context about the Baha'i Faith for new readers</label>
@@ -220,12 +399,12 @@
 
     <div class="question" data-q="4">
       <div class="question-label"><span class="q-num">04</span> All 133 quotes, or a curated selection?</div>
-      <div class="question-context">133 quotes is a substantial book (probably 180â250 pages depending on layout). A tighter edit of 60â80 might let each quote breathe more on the page and keep costs down.</div>
+      <div class="question-context">133 quotes is a substantial book (probably 180–250 pages depending on layout). A tighter edit of 60–80 might let each quote breathe more on the page and keep costs down.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q4" value="All 133 â I want them all in there"> All 133 â I want them all in there</label>
-        <label class="option"><input type="radio" name="q4" value="A curated 80â100 â tighter is better"> A curated 80â100 â tighter is better</label>
-        <label class="option"><input type="radio" name="q4" value="A best-of 50â60 â really let each one breathe"> A best-of 50â60 â really let each one breathe</label>
-        <label class="option"><input type="radio" name="q4" value="Not sure yet â show me layouts at different counts"> Not sure yet â show me layouts at different counts</label>
+        <label class="option"><input type="radio" name="q4" value="All 133 — I want them all in there"> All 133 — I want them all in there</label>
+        <label class="option"><input type="radio" name="q4" value="A curated 80–100 — tighter is better"> A curated 80–100 — tighter is better</label>
+        <label class="option"><input type="radio" name="q4" value="A best-of 50–60 — really let each one breathe"> A best-of 50–60 — really let each one breathe</label>
+        <label class="option"><input type="radio" name="q4" value="Not sure yet — show me layouts at different counts"> Not sure yet — show me layouts at different counts</label>
       </div>
     </div>
   </div>
@@ -240,24 +419,24 @@
 
     <div class="question" data-q="5">
       <div class="question-label"><span class="q-num">05</span> What size feels right?</div>
-      <div class="question-context">Coffee table books are typically larger format. Here are the common sizes â think about where it'll live (coffee table, bookshelf, bedside).</div>
+      <div class="question-context">Coffee table books are typically larger format. Here are the common sizes — think about where it'll live (coffee table, bookshelf, bedside).</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q5" value="Square ~250Ã250mm â modern, Instagram-friendly, compact"> Square ~250Ã250mm â modern, Instagram-friendly, compact</label>
-        <label class="option"><input type="radio" name="q5" value="A4 portrait (210Ã297mm) â classic, substantial"> A4 portrait (210Ã297mm) â classic, substantial</label>
-        <label class="option"><input type="radio" name="q5" value="Large landscape (~300Ã250mm) â dramatic, wide spreads"> Large landscape (~300Ã250mm) â dramatic, wide spreads</label>
-        <label class="option"><input type="radio" name="q5" value="Oversized square (~300Ã300mm) â big, statement piece"> Oversized square (~300Ã300mm) â big, statement piece</label>
-        <label class="option"><input type="radio" name="q5" value="Not sure â show me mockups at different sizes"> Not sure â show me mockups at different sizes</label>
+        <label class="option"><input type="radio" name="q5" value="Square ~250×250mm — modern, Instagram-friendly, compact"> Square ~250×250mm — modern, Instagram-friendly, compact</label>
+        <label class="option"><input type="radio" name="q5" value="A4 portrait (210×297mm) — classic, substantial"> A4 portrait (210×297mm) — classic, substantial</label>
+        <label class="option"><input type="radio" name="q5" value="Large landscape (~300×250mm) — dramatic, wide spreads"> Large landscape (~300×250mm) — dramatic, wide spreads</label>
+        <label class="option"><input type="radio" name="q5" value="Oversized square (~300×300mm) — big, statement piece"> Oversized square (~300×300mm) — big, statement piece</label>
+        <label class="option"><input type="radio" name="q5" value="Not sure — show me mockups at different sizes"> Not sure — show me mockups at different sizes</label>
       </div>
     </div>
 
     <div class="question" data-q="6">
       <div class="question-label"><span class="q-num">06</span> Cover style?</div>
-      <div class="question-context">Given the warm, tactile, analog direction we've been exploring â these are the options that would suit it best.</div>
+      <div class="question-context">Given the warm, tactile, analog direction we've been exploring — these are the options that would suit it best.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q6" value="Cloth/linen hardcover with foil-stamped title â tactile, warm, premium"> Cloth/linen hardcover with foil-stamped title â tactile, warm, premium</label>
-        <label class="option"><input type="radio" name="q6" value="Printed hardcover with dust jacket â classic bookshop feel"> Printed hardcover with dust jacket â classic bookshop feel</label>
-        <label class="option"><input type="radio" name="q6" value="Printed hardcover, no dust jacket â clean, modern"> Printed hardcover, no dust jacket â clean, modern</label>
-        <label class="option"><input type="radio" name="q6" value="Soft-touch matte hardcover â smooth, understated luxury"> Soft-touch matte hardcover â smooth, understated luxury</label>
+        <label class="option"><input type="radio" name="q6" value="Cloth/linen hardcover with foil-stamped title — tactile, warm, premium"> Cloth/linen hardcover with foil-stamped title — tactile, warm, premium</label>
+        <label class="option"><input type="radio" name="q6" value="Printed hardcover with dust jacket — classic bookshop feel"> Printed hardcover with dust jacket — classic bookshop feel</label>
+        <label class="option"><input type="radio" name="q6" value="Printed hardcover, no dust jacket — clean, modern"> Printed hardcover, no dust jacket — clean, modern</label>
+        <label class="option"><input type="radio" name="q6" value="Soft-touch matte hardcover — smooth, understated luxury"> Soft-touch matte hardcover — smooth, understated luxury</label>
       </div>
     </div>
 
@@ -265,10 +444,10 @@
       <div class="question-label"><span class="q-num">07</span> Paper feel?</div>
       <div class="question-context">This is one of the biggest decisions. It changes how the photography reads and how the book feels in your hands.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q7" value="Uncoated / matte â warm, tactile, natural feel (like a Kinfolk magazine)"> Uncoated / matte â warm, tactile, natural feel (like a Kinfolk magazine)</label>
-        <label class="option"><input type="radio" name="q7" value="Silk/satin â slight sheen, great colour reproduction, smooth"> Silk/satin â slight sheen, great colour reproduction, smooth</label>
-        <label class="option"><input type="radio" name="q7" value="Glossy â vivid colours, classic photo book feel"> Glossy â vivid colours, classic photo book feel</label>
-        <label class="option"><input type="radio" name="q7" value="Mixed â matte for quote pages, silk for photo pages"> Mixed â matte for quote pages, silk for photo pages</label>
+        <label class="option"><input type="radio" name="q7" value="Uncoated / matte — warm, tactile, natural feel (like a Kinfolk magazine)"> Uncoated / matte — warm, tactile, natural feel (like a Kinfolk magazine)</label>
+        <label class="option"><input type="radio" name="q7" value="Silk/satin — slight sheen, great colour reproduction, smooth"> Silk/satin — slight sheen, great colour reproduction, smooth</label>
+        <label class="option"><input type="radio" name="q7" value="Glossy — vivid colours, classic photo book feel"> Glossy — vivid colours, classic photo book feel</label>
+        <label class="option"><input type="radio" name="q7" value="Mixed — matte for quote pages, silk for photo pages"> Mixed — matte for quote pages, silk for photo pages</label>
       </div>
     </div>
 
@@ -281,7 +460,7 @@
         <label class="option"><input type="checkbox" name="q8" value="Embossed or debossed cover details"> Embossed or debossed cover details</label>
         <label class="option"><input type="checkbox" name="q8" value="Gilt or coloured page edges"> Gilt or coloured page edges</label>
         <label class="option"><input type="checkbox" name="q8" value="Lay-flat binding (pages open completely flat)"> Lay-flat binding (pages open completely flat)</label>
-        <label class="option"><input type="checkbox" name="q8" value="Keep it simple â the content should do the work"> Keep it simple â the content should do the work</label>
+        <label class="option"><input type="checkbox" name="q8" value="Keep it simple — the content should do the work"> Keep it simple — the content should do the work</label>
       </div>
     </div>
   </div>
@@ -301,7 +480,7 @@
         <label class="option"><input type="checkbox" name="q9" value="My own photography (existing and/or new shoots)"> My own photography (existing and/or new shoots)</label>
         <label class="option"><input type="checkbox" name="q9" value="Commission a photographer for new images"> Commission a photographer for new images</label>
         <label class="option"><input type="checkbox" name="q9" value="Licensed stock photography (curated to match the aesthetic)"> Licensed stock photography (curated to match the aesthetic)</label>
-        <label class="option"><input type="checkbox" name="q9" value="Community-sourced â invite Baha'i photographers to contribute"> Community-sourced â invite Baha'i photographers to contribute</label>
+        <label class="option"><input type="checkbox" name="q9" value="Community-sourced — invite Baha'i photographers to contribute"> Community-sourced — invite Baha'i photographers to contribute</label>
         <label class="option"><input type="checkbox" name="q9" value="Use the original Instagram images where resolution allows"> Use the original Instagram images where resolution allows</label>
       </div>
     </div>
@@ -310,10 +489,10 @@
       <div class="question-label"><span class="q-num">10</span> Photography style?</div>
       <div class="question-context">Thinking about your love for the Fujifilm aesthetic, analog warmth, and the Baha'i Blog visual language.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q10" value="Warm, film-like â Fujifilm tones, golden hour, natural light"> Warm, film-like â Fujifilm tones, golden hour, natural light</label>
-        <label class="option"><input type="radio" name="q10" value="Clean and minimal â letting the quotes take centre stage"> Clean and minimal â letting the quotes take centre stage</label>
-        <label class="option"><input type="radio" name="q10" value="Diverse and documentary â real people, real places, global"> Diverse and documentary â real people, real places, global</label>
-        <label class="option"><input type="radio" name="q10" value="Mix of styles â different moods for different themes/sections"> Mix of styles â different moods for different themes/sections</label>
+        <label class="option"><input type="radio" name="q10" value="Warm, film-like — Fujifilm tones, golden hour, natural light"> Warm, film-like — Fujifilm tones, golden hour, natural light</label>
+        <label class="option"><input type="radio" name="q10" value="Clean and minimal — letting the quotes take centre stage"> Clean and minimal — letting the quotes take centre stage</label>
+        <label class="option"><input type="radio" name="q10" value="Diverse and documentary — real people, real places, global"> Diverse and documentary — real people, real places, global</label>
+        <label class="option"><input type="radio" name="q10" value="Mix of styles — different moods for different themes/sections"> Mix of styles — different moods for different themes/sections</label>
       </div>
     </div>
 
@@ -321,10 +500,10 @@
       <div class="question-label"><span class="q-num">11</span> Should Baha'i Houses of Worship feature prominently?</div>
       <div class="question-context">Your architecture photography of the temples has been a signature of Baha'i Blog. These could anchor the section dividers or be a recurring motif.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q11" value="Yes â they should be a major visual thread through the book"> Yes â a major visual thread through the book</label>
-        <label class="option"><input type="radio" name="q11" value="Some â use them as section dividers or chapter openers"> Some â as section dividers or chapter openers</label>
-        <label class="option"><input type="radio" name="q11" value="Sparingly â include a few but don't make it about architecture"> Sparingly â include a few but don't make it the focus</label>
-        <label class="option"><input type="radio" name="q11" value="No â keep the photography focused on people and nature"> No â keep the focus on people and nature</label>
+        <label class="option"><input type="radio" name="q11" value="Yes — they should be a major visual thread through the book"> Yes — a major visual thread through the book</label>
+        <label class="option"><input type="radio" name="q11" value="Some — use them as section dividers or chapter openers"> Some — as section dividers or chapter openers</label>
+        <label class="option"><input type="radio" name="q11" value="Sparingly — include a few but don't make it about architecture"> Sparingly — include a few but don't make it the focus</label>
+        <label class="option"><input type="radio" name="q11" value="No — keep the photography focused on people and nature"> No — keep the focus on people and nature</label>
       </div>
     </div>
   </div>
@@ -355,10 +534,10 @@
       <div class="question-label"><span class="q-num">13</span> Quote layout approach?</div>
       <div class="question-context">How the quote and image relate to each other on the spread.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q13" value="One quote per spread â image on one page, quote on the other"> One quote per spread â image on one page, quote on the other</label>
-        <label class="option"><input type="radio" name="q13" value="Quote overlaid on photography â integrated design"> Quote overlaid on photography â integrated design</label>
-        <label class="option"><input type="radio" name="q13" value="Mixed â vary the layout to keep it dynamic"> Mixed â vary the layout to keep it dynamic</label>
-        <label class="option"><input type="radio" name="q13" value="Not sure â show me options"> Not sure â show me options</label>
+        <label class="option"><input type="radio" name="q13" value="One quote per spread — image on one page, quote on the other"> One quote per spread — image on one page, quote on the other</label>
+        <label class="option"><input type="radio" name="q13" value="Quote overlaid on photography — integrated design"> Quote overlaid on photography — integrated design</label>
+        <label class="option"><input type="radio" name="q13" value="Mixed — vary the layout to keep it dynamic"> Mixed — vary the layout to keep it dynamic</label>
+        <label class="option"><input type="radio" name="q13" value="Not sure — show me options"> Not sure — show me options</label>
       </div>
     </div>
 
@@ -366,10 +545,10 @@
       <div class="question-label"><span class="q-num">14</span> Typography direction?</div>
       <div class="question-context">You love Courier Prime for Big Fam. The question is whether this book should connect to that aesthetic or have its own identity.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q14" value="Carry the Courier Prime / analog aesthetic â connect it to your other work"> Courier Prime / analog aesthetic â connect to your other work</label>
-        <label class="option"><input type="radio" name="q14" value="Classic serif â timeless, elegant, lets the words feel weighty"> Classic serif â timeless, elegant, weighty</label>
-        <label class="option"><input type="radio" name="q14" value="Modern sans-serif â clean, contemporary, minimal"> Modern sans-serif â clean, contemporary, minimal</label>
-        <label class="option"><input type="radio" name="q14" value="Let the designer decide â I'll respond to options"> Let the designer decide â I'll respond to options</label>
+        <label class="option"><input type="radio" name="q14" value="Carry the Courier Prime / analog aesthetic — connect it to your other work"> Courier Prime / analog aesthetic — connect to your other work</label>
+        <label class="option"><input type="radio" name="q14" value="Classic serif — timeless, elegant, lets the words feel weighty"> Classic serif — timeless, elegant, weighty</label>
+        <label class="option"><input type="radio" name="q14" value="Modern sans-serif — clean, contemporary, minimal"> Modern sans-serif — clean, contemporary, minimal</label>
+        <label class="option"><input type="radio" name="q14" value="Let the designer decide — I'll respond to options"> Let the designer decide — I'll respond to options</label>
       </div>
     </div>
 
@@ -380,8 +559,8 @@
         <label class="option"><input type="radio" name="q15" value="I'd like to design it myself (I have InDesign skills)"> I'll design it myself (I have InDesign skills)</label>
         <label class="option"><input type="radio" name="q15" value="Hire a professional book designer"> Hire a professional book designer</label>
         <label class="option"><input type="radio" name="q15" value="Use the printer's in-house design service"> Use the printer's in-house design service</label>
-        <label class="option"><input type="radio" name="q15" value="Use a tool like Blurb's BookWright â keep it simple"> Use a tool like Blurb's BookWright â keep it simple</label>
-        <label class="option"><input type="radio" name="q15" value="Not sure yet â depends on cost"> Not sure yet â depends on cost</label>
+        <label class="option"><input type="radio" name="q15" value="Use a tool like Blurb's BookWright — keep it simple"> Use a tool like Blurb's BookWright — keep it simple</label>
+        <label class="option"><input type="radio" name="q15" value="Not sure yet — depends on cost"> Not sure yet — depends on cost</label>
       </div>
     </div>
   </div>
@@ -398,37 +577,37 @@
       <div class="question-label"><span class="q-num">16</span> What's the budget range for the print run?</div>
       <div class="question-context">This is total production cost (not per-book). Design fees would be separate. A rough range helps us match you to the right printer.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q16" value="Under $500 â just want a few beautiful copies"> Under $500 â just want a few beautiful copies</label>
-        <label class="option"><input type="radio" name="q16" value="$500â$2,000 â willing to invest in quality for a small run"> $500â$2,000 â quality small run</label>
-        <label class="option"><input type="radio" name="q16" value="$2,000â$5,000 â proper production run"> $2,000â$5,000 â proper production run</label>
-        <label class="option"><input type="radio" name="q16" value="$5,000+ â going all in on this"> $5,000+ â going all in</label>
-        <label class="option"><input type="radio" name="q16" value="Not sure yet â tell me what different budgets get me"> Not sure yet â tell me what different budgets get me</label>
+        <label class="option"><input type="radio" name="q16" value="Under $500 — just want a few beautiful copies"> Under $500 — just want a few beautiful copies</label>
+        <label class="option"><input type="radio" name="q16" value="$500–$2,000 — willing to invest in quality for a small run"> $500–$2,000 — quality small run</label>
+        <label class="option"><input type="radio" name="q16" value="$2,000–$5,000 — proper production run"> $2,000–$5,000 — proper production run</label>
+        <label class="option"><input type="radio" name="q16" value="$5,000+ — going all in on this"> $5,000+ — going all in</label>
+        <label class="option"><input type="radio" name="q16" value="Not sure yet — tell me what different budgets get me"> Not sure yet — tell me what different budgets get me</label>
       </div>
     </div>
 
     <div class="question" data-q="17">
       <div class="question-label"><span class="q-num">17</span> Is there a timeline?</div>
-      <div class="question-context">Some dates that might matter: RidvÃ¡n (April 21âMay 2), Naw-RÃºz (March 20â21), or just "whenever it's ready."</div>
+      <div class="question-context">Some dates that might matter: Ridván (April 21–May 2), Naw-Rúz (March 20–21), or just "whenever it's ready."</div>
       <div class="options">
         <label class="option"><input type="radio" name="q17" value="Aiming for a specific date or event"> Aiming for a specific date or event</label>
         <label class="option"><input type="radio" name="q17" value="Within the next 3 months"> Within the next 3 months</label>
-        <label class="option"><input type="radio" name="q17" value="Within 6 months â no rush"> Within 6 months â no rush</label>
-        <label class="option"><input type="radio" name="q17" value="Whenever it's ready â quality over speed"> Whenever it's ready â quality over speed</label>
+        <label class="option"><input type="radio" name="q17" value="Within 6 months — no rush"> Within 6 months — no rush</label>
+        <label class="option"><input type="radio" name="q17" value="Whenever it's ready — quality over speed"> Whenever it's ready — quality over speed</label>
       </div>
     </div>
 
     <div class="question" data-q="18">
       <div class="question-label"><span class="q-num">18</span> If aiming for a date, which one?</div>
       <div class="input-wrap">
-        <input type="text" name="q18" placeholder="e.g. RidvÃ¡n 2026, Christmas, a birthday...">
+        <input type="text" name="q18" placeholder="e.g. Ridván 2026, Christmas, a birthday...">
       </div>
     </div>
 
     <div class="question" data-q="19">
-      <div class="question-label"><span class="q-num">19</span> Sustainability â does it matter for this project?</div>
+      <div class="question-label"><span class="q-num">19</span> Sustainability — does it matter for this project?</div>
       <div class="question-context">Some printers offer FSC-certified paper, recycled stocks, and carbon-neutral production. Given Baha'i principles around stewardship of the earth, this might resonate.</div>
       <div class="options">
-        <label class="option"><input type="radio" name="q19" value="Yes â I'd prefer sustainable materials even if it costs more"> Yes â prefer sustainable even if it costs more</label>
+        <label class="option"><input type="radio" name="q19" value="Yes — I'd prefer sustainable materials even if it costs more"> Yes — prefer sustainable even if it costs more</label>
         <label class="option"><input type="radio" name="q19" value="Nice to have but not a dealbreaker"> Nice to have but not a dealbreaker</label>
         <label class="option"><input type="radio" name="q19" value="Not a priority for this project"> Not a priority for this project</label>
       </div>
@@ -436,7 +615,7 @@
 
     <div class="question" data-q="20">
       <div class="question-label"><span class="q-num">20</span> Anything else on your mind about this book?</div>
-      <div class="question-context">Dreams, worries, ideas you've been sitting on, books you've seen that you want this to feel like â anything goes.</div>
+      <div class="question-context">Dreams, worries, ideas you've been sitting on, books you've seen that you want this to feel like — anything goes.</div>
       <div class="input-wrap">
         <textarea name="q20" placeholder="Whatever's on your mind..."></textarea>
       </div>
@@ -538,10 +717,10 @@
 
   function generateSummary() {
     let lines = [];
-    lines.push("RADIANT HEART â BOOK QUESTIONNAIRE RESPONSES");
+    lines.push("RADIANT HEART — BOOK QUESTIONNAIRE RESPONSES");
     lines.push("Completed by: Collis Ta'eed");
     lines.push("Date: " + new Date().toLocaleDateString('en-AU', { year:'numeric', month:'long', day:'numeric' }));
-    lines.push("â".repeat(50));
+    lines.push("═".repeat(50));
     lines.push("");
 
     for (let i = 1; i <= totalQuestions; i++) {

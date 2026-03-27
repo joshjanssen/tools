@@ -1339,8 +1339,8 @@ function startSwiping() {
   const maxQuotes = Math.floor((selectedMinutes * 60) / SECS_PER_QUOTE);
   const sessionSize = Math.min(maxQuotes, unseen.length);
 
-  // Shuffle unseen and take sessionSize
-  sessionDeck = shuffle([...unseen]).slice(0, sessionSize);
+  // Interleaved shuffle — spread authors out so you don't get the same person repeatedly
+  sessionDeck = interleavedShuffle([...unseen]).slice(0, sessionSize);
   currentIndex = 0;
   sessionFavorites = [];
   sessionPassed = [];
@@ -1359,6 +1359,31 @@ function shuffle(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+function interleavedShuffle(arr) {
+  // Group by author, shuffle within each group
+  const byAuthor = {};
+  arr.forEach(q => {
+    if (!byAuthor[q.author]) byAuthor[q.author] = [];
+    byAuthor[q.author].push(q);
+  });
+  Object.values(byAuthor).forEach(group => shuffle(group));
+
+  // Round-robin pick from each author bucket, largest first
+  const buckets = Object.values(byAuthor).sort((a, b) => b.length - a.length);
+  const result = [];
+  let round = 0;
+  while (result.length < arr.length) {
+    // Shuffle bucket order each round for variety
+    const active = buckets.filter(b => b.length > round);
+    shuffle(active);
+    active.forEach(b => {
+      if (b[round]) result.push(b[round]);
+    });
+    round++;
+  }
+  return result;
 }
 
 // ════════════════════════════════════

@@ -290,8 +290,10 @@
     background: var(--surface);
     border: 1px solid var(--border);
     font-family: inherit;
-    cursor: default;
+    cursor: pointer;
+    transition: all 0.15s;
   }
+  .hint:active { transform: scale(0.93); }
   .hint-left { color: var(--text-secondary); }
   .hint-right { color: var(--love); border-color: rgba(255,68,88,0.15); }
   .hint-undo {
@@ -903,9 +905,9 @@
     <div class="card-stack" id="cardStack"></div>
 
     <div class="swipe-hints">
-      <div class="hint hint-left">← Next</div>
+      <button class="hint hint-left" onclick="buttonSwipe('left')">← Next</button>
       <button class="hint hint-undo" id="undoBtn" onclick="undo()" style="opacity:0;pointer-events:none">↩ Undo</button>
-      <div class="hint hint-right">♥ Love →</div>
+      <button class="hint hint-right" onclick="buttonSwipe('right')">♥ Love →</button>
     </div>
   </div>
 
@@ -1629,6 +1631,18 @@ function flyOut(dir) {
   setTimeout(renderCard, 320);
 }
 
+
+function buttonSwipe(dir) {
+  if (currentIndex >= sessionDeck.length) return;
+  const card = getCard();
+  if (!card) return;
+  const peekX = dir === 'right' ? 30 : -30;
+  const overlay = dir === 'right' ? document.getElementById('loveOverlay') : document.getElementById('passOverlay');
+  card.style.transition = 'transform 0.12s ease';
+  card.style.transform = `translateX(${peekX}px) rotate(${peekX * 0.06}deg)`;
+  if (overlay) overlay.style.opacity = '0.8';
+  setTimeout(() => flyOut(dir), 120);
+}
 
 function undo() {
   if (history.length === 0) return;
